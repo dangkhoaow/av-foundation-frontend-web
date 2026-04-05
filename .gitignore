@@ -3,3 +3,8 @@ dist
 .env*
 .DS_Store
 coverage
+.agent/skills/test-testing-plan/plans
+.agent/skills/test-runner/runs
+.agent/skills/test-runner/issues
+playwright-report
+test-results

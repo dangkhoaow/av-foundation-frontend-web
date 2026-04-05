@@ -16,6 +16,9 @@ metadata:
 - Write a dated plan file under:
   - `.agent/skills/test-testing-plan/plans/test-plan-yyyymmdd-hhmm.md`
 
+## Script
+- `scripts/generate-test-plan.mjs` generates the dated plan file.
+
 ## Rules
 - Include only ACs/testcases for features marked as implemented in `tech-dev-process-implementation`.
 - Exclude any tests for features not yet implemented.

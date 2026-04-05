@@ -38,6 +38,7 @@
 ### Testing pipeline
 - Unit tests: Vitest + jsdom (`npm run test:unit`).
 - E2E tests: Playwright (`npm run test:e2e`).
+- Test plan generation: `node .agent/skills/test-testing-plan/scripts/generate-test-plan.mjs`.
 - Runner: `npm run test:runner` creates dated run reports and issues lists.
 - Optional issue posting requires `ISSUES_ENABLED=true` and `GITHUB_TOKEN`.
 

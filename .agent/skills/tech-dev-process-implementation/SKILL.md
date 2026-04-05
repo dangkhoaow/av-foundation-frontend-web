@@ -35,6 +35,67 @@ metadata:
 ```
 
 ## Current status
+## 2026-04-05 13:32
+### Shipped
+- CI build now defaults `VITE_API_URL` and `VITE_IMAGE_BASE_URL` to the CloudFront backend if secrets are missing.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- GH Pages build uses CloudFront API without requiring secrets.
+
+### Not implemented yet
+- None (requires repo secrets for full API + issues automation).
+
+### Risks / blockers
+- If backend URL changes, update secrets or workflow defaults.
+- GH Pages availability delays can cause E2E wait step to timeout.
+- Issue posting requires `issues: write` permission and valid token.
+
+## 2026-04-05 13:31
+### Shipped
+- Updated plan todo statuses to reflect completed skill, unit, and E2E items.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- Plan file reflects current implementation status.
+
+### Not implemented yet
+- None (requires repo secrets for full API + issues automation).
+
+### Risks / blockers
+- Missing `VITE_API_URL` limits prerender to static routes only.
+- GH Pages availability delays can cause E2E wait step to timeout.
+- Issue posting requires `issues: write` permission and valid token.
+
+## 2026-04-05 13:29
+### Shipped
+- Test plan generator script at `.agent/skills/test-testing-plan/scripts/generate-test-plan.mjs`.
+- CI test job runs unit tests, waits for GH Pages, then runs `test:runner` and uploads artifacts.
+- Ignored generated test artifacts in `.gitignore`.
+- README updated with test plan generation step.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- Generate scoped plan via `node .agent/skills/test-testing-plan/scripts/generate-test-plan.mjs`.
+- CI can run post-deploy unit + E2E tests with run reports and issue lists.
+
+### Not implemented yet
+- None (requires repo secrets for full API + issues automation).
+
+### Risks / blockers
+- Missing `VITE_API_URL` limits prerender to static routes only.
+- GH Pages availability delays can cause E2E wait step to timeout.
+- Issue posting requires `issues: write` permission and valid token.
+
 ## 2026-04-05 13:25
 ### Shipped
 - Prerender now skips API fetch when `VITE_API_URL` is unset or local in CI.
