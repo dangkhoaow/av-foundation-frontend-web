@@ -347,7 +347,7 @@ export function CollectionClient() {
     );
   }
 
-  // Error state - show skeleton loading instead of error message
+  // Error state - surface a visible empty state instead of a blank skeleton.
   if (isError) {
     return (
       <div className="collection-page">
@@ -356,22 +356,8 @@ export function CollectionClient() {
             <h1 className="collection-page__title">Collection</h1>
             <div className="collection-page__featured">
               <h2 className="collection-page__section-title">New creation</h2>
-
-              {/* Featured Skeleton - matches ArtistCollectionCard layout */}
-              <div className="skeleton-featured">
-                <div className="skeleton-featured__info">
-                  <div className="skeleton-featured__avatar"></div>
-                  <div className="skeleton-featured__text">
-                    <div className="skeleton-featured__line skeleton-featured__line--medium"></div>
-                    <div className="skeleton-featured__line skeleton-featured__line--short"></div>
-                  </div>
-                  <div className="skeleton-featured__text" style={{ marginTop: 'auto' }}>
-                    <div className="skeleton-featured__line skeleton-featured__line--long"></div>
-                    <div className="skeleton-featured__line skeleton-featured__line--long"></div>
-                    <div className="skeleton-featured__line skeleton-featured__line--medium"></div>
-                  </div>
-                </div>
-                <div className="skeleton-featured__gallery"></div>
+              <div className="collection-page__empty collection-page__empty--error">
+                <p>Không thể tải bộ sưu tập. Vui lòng thử lại sau.</p>
               </div>
             </div>
           </div>
@@ -380,17 +366,8 @@ export function CollectionClient() {
           <div className="collection-page__filters">
             <h2 className="collection-page__section-title">Key works</h2>
           </div>
-          <div className="collection-page__grid">
-            {Array.from({ length: LIMIT }).map((_, index) => (
-              <div
-                key={`skeleton-error-${index}`}
-                className="skeleton-grid-item"
-                style={{
-                  background: SKELETON_COLORS[index % SKELETON_COLORS.length],
-                  gridRowEnd: `span ${getSkeletonRowSpan(index)}`
-                }}
-              ></div>
-            ))}
+          <div className="collection-page__empty collection-page__empty--error">
+            <p>Không thể tải bộ sưu tập. Vui lòng thử lại sau.</p>
           </div>
         </div>
       </div>
@@ -562,7 +539,7 @@ export function CollectionClient() {
         )}
 
         {filteredArtworks.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '60px 20px', color: '#6B2128' }}>
+          <div className="collection-page__empty" style={{ textAlign: 'center', padding: '60px 20px', color: '#6B2128' }}>
             <p>No artworks found.</p>
           </div>
         )}

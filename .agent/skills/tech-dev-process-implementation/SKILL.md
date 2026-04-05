@@ -35,6 +35,134 @@ metadata:
 ```
 
 ## Current status
+## 2026-04-05 22:24
+### Shipped
+- Added a baseline-host probe to `scripts/test-runner.mjs` so the runner skips the live UAT crawl and reuses the newest archived baseline manifest/snapshots when the old site is unreachable.
+- Kept compare pointed at the resolved baseline reference and surfaced the source in the run report with `baseline source: archive:20260406-0355` when the archive fallback is used.
+- Updated the dated test plan visual-parity note to explicitly mention archived-baseline fallback when the live crawl host is down.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- `VISUAL_ENABLED=true TEST_RUNNER_POST_VISUAL_COOLDOWN_MS=0 VISUAL_LOCALES=vi VISUAL_MAX_ARTISTS=1 VISUAL_MAX_ARTWORKS=1 VISUAL_MAX_EVENTS=1 VISUAL_MAX_NEWS=1 npm run test:runner`
+- The runner now bypasses the dead baseline host and enters compare immediately with the archived reference instead of waiting through the full live crawl.
+
+### Not implemented yet
+- The long archived compare pass was stopped after verifying the fallback path, so the full visual diff report still needs a complete run if you want the latest comparison artifacts.
+- The manifest crawl still retries slow CloudFront 504s before it can build the dated manifest.
+
+### Risks / blockers
+- The API crawl for manifest generation is still slow and occasionally stalls on repeated 504s.
+- The compare routes still surface the known collection and artists diffs when the full archive-backed run is allowed to finish.
+## 2026-04-05 21:57
+### Shipped
+- Switched artwork, artist, news, and event detail API fetches to fail fast with `maxAttempts: 1` and `timeoutMs: 20_000` so detail pages stop hanging on the default retry path.
+- Tightened `scripts/route-manifest.mjs` detail ready selectors to the loaded content containers and updated `tests/e2e/visual-regression.spec.ts` to poll for ready/error states in the browser instead of relying on a one-shot ready wait.
+- Verified the visual runner now surfaces collection index and collection detail failures as explicit `.collection-page__empty--error` and `.collection-detail-error` states against the archived baseline manifest.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- `VISUAL_ENABLED=true E2E_BASE_URL=http://localhost:5174/av-foundation-frontend-web/ VISUAL_MANIFEST_PATH=/tmp/visual-manifest-patched.json VISUAL_SNAPSHOT_DIR=.agent/skills/test-runner/visual/20260405-2344/baseline/snapshots PLAYWRIGHT_OUTPUT_DIR=/tmp/av-web-collection-index-check PLAYWRIGHT_HTML_OUTPUT=/tmp/av-web-collection-index-report npx playwright test tests/e2e/visual-regression.spec.ts --workers=1 --project=desktop -g "collectionIndex @visual vi /vi/collection"`
+- `VISUAL_ENABLED=true E2E_BASE_URL=http://localhost:5174/av-foundation-frontend-web/ VISUAL_MANIFEST_PATH=/tmp/visual-manifest-patched.json VISUAL_SNAPSHOT_DIR=.agent/skills/test-runner/visual/20260405-2344/baseline/snapshots PLAYWRIGHT_OUTPUT_DIR=/tmp/av-web-collection-detail-check-2 PLAYWRIGHT_HTML_OUTPUT=/tmp/av-web-collection-detail-report-2 npx playwright test tests/e2e/visual-regression.spec.ts --workers=1 -g "collectionDetail @visual vi /vi/collection/27929697-e7cb-4d1d-828f-2b7fe83debc6"`
+- The visual runner now catches late error states on collection routes instead of snapshotting the loading shell.
+
+### Not implemented yet
+- The live baseline crawl against `http://av-foundation-frontend-uat.us-east-1.elasticbeanstalk.com/` is still blocked by connection timeouts.
+- The runner still does not auto-fallback to archived baseline manifests/snapshots when the live baseline host is unreachable.
+
+### Risks / blockers
+- The backend is still timing out on collection and detail fetches in this environment, so the visual checks will continue to flag those routes until the upstream data is reachable.
+- Full end-to-end baseline capture still needs either the live UAT site or an automated archive fallback path.
+## 2026-04-05 21:30
+### Shipped
+- Regenerated the scoped test plan at `.agent/skills/test-testing-plan/plans/test-plan-20260406-0354.md` and added an explicit visual-parity note for cached baseline comparisons.
+- Ran the cached-baseline visual compare against `.agent/skills/test-runner/visual/20260405-2344/baseline/snapshots` to keep testing moving while the live UAT baseline host is unavailable.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- Cached visual comparison against the last complete baseline snapshot archive.
+- The compare run now catches the collection and artists regressions instead of letting the readiness checks fail silently.
+
+### Not implemented yet
+- The live baseline crawl against `http://av-foundation-frontend-uat.us-east-1.elasticbeanstalk.com/` is still blocked by connection timeouts.
+- The runner does not yet auto-fallback to archived baseline manifests/snapshots when the live baseline host is unreachable.
+
+### Risks / blockers
+- The cached-baseline compare still reports 12 failures, concentrated on `collection` and `artists` routes in both locales and viewports.
+- The upstream baseline host remains unreachable from this environment, so a fresh crawl-based baseline capture is not currently possible.
+
+## 2026-04-05 20:45
+### Shipped
+- Replaced the list-page locator race in `tests/e2e/collection.spec.ts`, `tests/e2e/artists.spec.ts`, and `tests/e2e/news-events.spec.ts` with browser-side polling so each spec branches on the first visible state without leaving a hanging wait behind.
+- Added explicit error selectors for collection and artists to `scripts/route-manifest.mjs` so baseline comparison can fail fast on broken list states.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- `VISUAL_ENABLED=true E2E_BASE_URL=http://localhost:5174/av-foundation-frontend-web/ PLAYWRIGHT_OUTPUT_DIR=/tmp/av-web-list-check-visual-2 PLAYWRIGHT_HTML_OUTPUT=/tmp/av-web-list-report-visual-2 npx playwright test tests/e2e/collection.spec.ts tests/e2e/artists.spec.ts tests/e2e/news-events.spec.ts --workers=1`
+- The list suite now passes in visual mode against the local app.
+
+### Not implemented yet
+- The full visual baseline/compare runner still needs a fresh pass with the latest polling fixes applied.
+
+### Risks / blockers
+- The upstream API is still flaky/slow, so the full runner can remain long-running even though the list-page waits are now stable.
+
+## 2026-04-05 18:10
+### Shipped
+- Hardened the visual manifest crawl in `scripts/route-manifest.mjs` by requesting capped page sizes for capped runs, retrying 504/429 responses longer with exponential backoff, and falling back to empty lists instead of aborting the whole manifest when one list endpoint stays flaky.
+- Added a cooldown before the functional phase in `scripts/test-runner.mjs` so the backend has a short recovery window after baseline/compare crawling.
+- Increased the Playwright visual test timeout in `playwright.config.ts` to give the old baseline site more room during the crawl.
+- Extended the slow functional waits in `tests/e2e/artists.spec.ts`, `tests/e2e/collection.spec.ts`, and `tests/e2e/news-events.spec.ts` so they tolerate the backend's longer recovery window.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- `VISUAL_ENABLED=true BASELINE_BASE_URL=http://av-foundation-frontend-uat.us-east-1.elasticbeanstalk.com/ E2E_BASE_URL=http://localhost:5174/av-foundation-frontend-web/ VISUAL_API_URL=https://d3te863nebxng5.cloudfront.net VISUAL_MAX_ARTISTS=1 VISUAL_MAX_ARTWORKS=1 VISUAL_MAX_EVENTS=1 VISUAL_MAX_NEWS=1 VISUAL_MAX_DIFF_PIXEL_RATIO=0.05 ISSUES_ENABLED=false npm run test:runner`
+- The manifest crawl now reaches the visual phase more reliably instead of failing outright on a single 504.
+- The artists, collection, and news/events functional specs now wait longer for their API-driven content before failing.
+
+### Not implemented yet
+- The latest full visual/functional pass after the timeout increase still needs a fresh verification run.
+- Artist-detail visual diffs still need a baseline/acceptance decision once the crawl fully completes.
+
+### Risks / blockers
+- The upstream CloudFront API still returns intermittent 504s on list endpoints, so the full runner can still take a long time under load.
+- The old baseline site can still be slow enough to hit navigation timeouts during the visual crawl.
+
+## 2026-04-05 16:20
+### Shipped
+- Ran the full visual baseline/compare flow against the AV dev server on `http://localhost:5174/av-foundation-frontend-web/` with sequential Playwright workers to avoid the unrelated `5173` app collision.
+- Fixed the mobile collection functional race by waiting for the artworks API response before navigating to `/vi/collection`.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- `E2E_BASE_URL=http://localhost:5174/av-foundation-frontend-web/ npx playwright test tests/e2e/collection.spec.ts`
+- `VISUAL_ENABLED=true BASELINE_BASE_URL=http://av-foundation-frontend-uat.us-east-1.elasticbeanstalk.com/ E2E_BASE_URL=http://localhost:5174/av-foundation-frontend-web/ VISUAL_API_URL=https://d3te863nebxng5.cloudfront.net VISUAL_MAX_ARTISTS=1 VISUAL_MAX_ARTWORKS=1 VISUAL_MAX_EVENTS=1 VISUAL_MAX_NEWS=1 VISUAL_MAX_DIFF_PIXEL_RATIO=0.05 ISSUES_ENABLED=false npm run test:runner`
+- The mobile collection functional spec now passes.
+
+### Not implemented yet
+- Artist-detail screenshots still differ from the old baseline on `vi`/`en` desktop and mobile because the AV site now renders the portrait image instead of the baseline placeholder.
+
+### Risks / blockers
+- The compare runner must use the AV server on port `5174`; `5173` is occupied by a different local app and causes false failures.
+- The current compare report still shows four artist-detail diffs, which are tied to the now-correct portrait rendering and need a baseline/acceptance decision.
+
 ## 2026-04-05 15:35
 ### Shipped
 - Removed stacked TanStack Query retries so the global `QueryProvider` now lets `ApiClient` handle retryable 429/timeouts.

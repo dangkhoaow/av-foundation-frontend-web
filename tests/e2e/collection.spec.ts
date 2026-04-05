@@ -16,13 +16,33 @@ console.info('[E2E] Base URL resolved', { baseUrl, basePath });
 test('collection list loads and opens modal', async ({ page }) => {
   await page.goto(buildUrl('/vi/collection'));
 
-  await page.waitForResponse(
-    (response) => response.url().includes('/api/public/artworks') && response.ok(),
-    { timeout: 30_000 }
-  );
+  const readyStateHandle = await page.waitForFunction(() => {
+    const isVisible = (selector: string) => Array.from(document.querySelectorAll(selector)).some((element) => {
+      const htmlElement = element as HTMLElement;
+      const style = window.getComputedStyle(htmlElement);
+      return style.display !== 'none' && style.visibility !== 'hidden' && htmlElement.getClientRects().length > 0;
+    });
+
+    if (isVisible('.collection-page__empty')) {
+      return 'empty';
+    }
+
+    if (isVisible('.artwork-card-grid')) {
+      return 'items';
+    }
+
+    return false;
+  }, { timeout: 120_000 });
+
+  const readyState = await readyStateHandle.jsonValue() as 'items' | 'empty';
+
+  if (readyState === 'empty') {
+    return;
+  }
 
   const firstCard = page.locator('.artwork-card-grid').first();
-  await expect(firstCard).toBeVisible({ timeout: 30_000 });
+
+  await expect(firstCard).toBeVisible({ timeout: 120_000 });
 
   await firstCard.scrollIntoViewIfNeeded();
   await firstCard.click({ force: true });

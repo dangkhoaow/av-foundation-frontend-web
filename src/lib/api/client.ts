@@ -11,6 +11,11 @@ export interface ApiError {
   data?: any;
 }
 
+interface ApiRequestConfig {
+  maxAttempts?: number;
+  timeoutMs?: number;
+}
+
 const RETRYABLE_STATUS_CODES = new Set([408, 429, 500, 502, 503, 504]);
 const MAX_RETRY_ATTEMPTS = 2;
 const BASE_RETRY_DELAY_MS = 1000;
@@ -51,16 +56,19 @@ export class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    config: ApiRequestConfig = {}
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     const method = (options.method || 'GET').toUpperCase();
     const canRetry = method === 'GET' || method === 'HEAD';
-    const maxAttempts = canRetry ? MAX_RETRY_ATTEMPTS + 1 : 1;
+    const defaultMaxAttempts = canRetry ? MAX_RETRY_ATTEMPTS + 1 : 1;
+    const maxAttempts = config.maxAttempts ?? defaultMaxAttempts;
+    const requestTimeout = config.timeoutMs ?? this.timeout;
     
     for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+      const timeoutId = setTimeout(() => controller.abort(), requestTimeout);
 
       try {
         const response = await fetch(url, {
@@ -164,13 +172,18 @@ export class ApiClient {
         } as ApiError;
       }
     }
+
+    throw {
+      message: 'Request failed',
+      status: 0,
+    } as ApiError;
   }
 
-  async get<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  async get<T>(endpoint: string, options?: RequestInit, config?: ApiRequestConfig): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'GET' }, config);
   }
 
-  async post<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {
+  async post<T>(endpoint: string, data?: any, options?: RequestInit, config?: ApiRequestConfig): Promise<T> {
     return this.request<T>(endpoint, {
       ...options,
       method: 'POST',
@@ -179,10 +192,10 @@ export class ApiClient {
         ...(options?.headers || {}),
       },
       body: JSON.stringify(data),
-    });
+    }, config);
   }
 
-  async put<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {
+  async put<T>(endpoint: string, data?: any, options?: RequestInit, config?: ApiRequestConfig): Promise<T> {
     return this.request<T>(endpoint, {
       ...options,
       method: 'PUT',
@@ -191,10 +204,10 @@ export class ApiClient {
         ...(options?.headers || {}),
       },
       body: JSON.stringify(data),
-    });
+    }, config);
   }
 
-  async patch<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {
+  async patch<T>(endpoint: string, data?: any, options?: RequestInit, config?: ApiRequestConfig): Promise<T> {
     return this.request<T>(endpoint, {
       ...options,
       method: 'PATCH',
@@ -203,11 +216,11 @@ export class ApiClient {
         ...(options?.headers || {}),
       },
       body: JSON.stringify(data),
-    });
+    }, config);
   }
 
-  async delete<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+  async delete<T>(endpoint: string, options?: RequestInit, config?: ApiRequestConfig): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'DELETE' }, config);
   }
 
   setHeader(key: string, value: string) {

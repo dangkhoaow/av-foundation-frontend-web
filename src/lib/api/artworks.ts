@@ -75,7 +75,10 @@ export const artworksAPI = {
     if (options?.sortBy) params.append('sortBy', options.sortBy);
     if (options?.sortOrder) params.append('sortOrder', options.sortOrder);
     if (options?.artistId) params.append('artistId', options.artistId);
-    return apiClient.get<ArtworkApiResponse>(`/api/public/artworks?${params.toString()}`);
+    return apiClient.get<ArtworkApiResponse>(`/api/public/artworks?${params.toString()}`, undefined, {
+      maxAttempts: 1,
+      timeoutMs: 20_000,
+    });
   },
 
   /**
@@ -83,7 +86,9 @@ export const artworksAPI = {
    */
   getById: async (id: string): Promise<Artwork> => {
     const response = await apiClient.get<{ success: boolean; data: Artwork; message: string }>(
-      `/api/public/artworks/${id}`
+      `/api/public/artworks/${id}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
     return response.data;
   },
@@ -93,7 +98,9 @@ export const artworksAPI = {
    */
   search: async (query: string, page: number = 1, limit: number = 22): Promise<ArtworkApiResponse> => {
     return apiClient.get<ArtworkApiResponse>(
-      `/api/public/artworks/search?q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`
+      `/api/public/artworks/search?q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 };

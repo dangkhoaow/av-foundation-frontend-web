@@ -188,7 +188,9 @@ export const newsAPI = {
     sortOrder: 'asc' | 'desc' = 'desc'
   ): Promise<NewsApiResponse> => {
     return apiClient.get<NewsApiResponse>(
-      `/api/public/news?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      `/api/public/news?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 
@@ -203,7 +205,9 @@ export const newsAPI = {
    */
   getById: async (id: string): Promise<NewsArticle> => {
     const response = await apiClient.get<NewsDetailApiResponse>(
-      `/api/public/news/${id}`
+      `/api/public/news/${id}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
     return response.data;
   },
@@ -225,7 +229,9 @@ export const newsAPI = {
     limit: number = 12
   ): Promise<NewsApiResponse> => {
     return apiClient.get<NewsApiResponse>(
-      `/api/public/news?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`
+      `/api/public/news?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 
@@ -245,7 +251,9 @@ export const newsAPI = {
     limit: number = 12
   ): Promise<NewsApiResponse> => {
     return apiClient.get<NewsApiResponse>(
-      `/api/public/news?category=${encodeURIComponent(category)}&page=${page}&limit=${limit}`
+      `/api/public/news?category=${encodeURIComponent(category)}&page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 
@@ -265,7 +273,9 @@ export const newsAPI = {
     limit: number = 12
   ): Promise<NewsApiResponse> => {
     return apiClient.get<NewsApiResponse>(
-      `/api/public/news?tag=${encodeURIComponent(tag)}&page=${page}&limit=${limit}`
+      `/api/public/news?tag=${encodeURIComponent(tag)}&page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 };

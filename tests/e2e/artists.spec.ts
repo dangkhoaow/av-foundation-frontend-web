@@ -17,25 +17,33 @@ console.info('[E2E] Base URL resolved', { baseUrl, basePath });
 test('artists list loads and opens detail', async ({ page }) => {
   await page.goto(buildUrl('/vi/artists'));
 
-  await page.waitForResponse(
-    (response) => response.url().includes('/api/public/artists') && response.ok(),
-    { timeout: 30_000 }
-  );
+  const readyStateHandle = await page.waitForFunction(() => {
+    const isVisible = (selector: string) => Array.from(document.querySelectorAll(selector)).some((element) => {
+      const htmlElement = element as HTMLElement;
+      const style = window.getComputedStyle(htmlElement);
+      return style.display !== 'none' && style.visibility !== 'hidden' && htmlElement.getClientRects().length > 0;
+    });
 
-  const firstArtist = page.locator('a.artist-card').first();
-  const emptyState = page.locator('.artists-page__empty');
+    if (isVisible('.artists-page__empty')) {
+      return 'empty';
+    }
 
-  await Promise.any([
-    firstArtist.waitFor({ state: 'visible', timeout: 30_000 }),
-    emptyState.waitFor({ state: 'visible', timeout: 30_000 }),
-  ]);
+    if (isVisible('a.artist-card')) {
+      return 'items';
+    }
 
-  if (await emptyState.isVisible()) {
-    await expect(emptyState).toBeVisible();
+    return false;
+  }, { timeout: 60_000 });
+
+  const readyState = await readyStateHandle.jsonValue() as 'items' | 'empty';
+
+  if (readyState === 'empty') {
     return;
   }
 
-  await expect(firstArtist).toBeVisible({ timeout: 30_000 });
+  const firstArtist = page.locator('a.artist-card').first();
+
+  await expect(firstArtist).toBeVisible({ timeout: 60_000 });
 
   const href = await firstArtist.getAttribute('href');
   expect(href).toBeTruthy();

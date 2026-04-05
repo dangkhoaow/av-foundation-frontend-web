@@ -26,6 +26,107 @@ export const findLatestPlan = async (plansDir) => {
 
 export const resolveUrl = (value, fallback) => (value || fallback).replace(/\/$/, '');
 
+const timestampDirectoryPattern = /^\d{8}-\d{4}$/;
+
+const fileExists = async (filePath) => {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const resolveLatestArchivedBaseline = async ({ visualRoot, excludeTimestamp = null }) => {
+  const entries = await fs.readdir(visualRoot, { withFileTypes: true }).catch(() => []);
+  const candidateTimestamps = entries
+    .filter((entry) => entry.isDirectory() && timestampDirectoryPattern.test(entry.name) && entry.name !== excludeTimestamp)
+    .map((entry) => entry.name)
+    .sort()
+    .reverse();
+
+  for (const archiveTimestamp of candidateTimestamps) {
+    const archiveRoot = path.join(visualRoot, archiveTimestamp);
+    const snapshotDir = path.join(archiveRoot, 'baseline', 'snapshots');
+    if (!(await fileExists(snapshotDir))) continue;
+
+    const snapshotEntries = await fs.readdir(snapshotDir, { withFileTypes: true }).catch(() => []);
+    if (!snapshotEntries.length) continue;
+
+    const manifestDir = path.join(archiveRoot, 'manifests');
+    const manifestFiles = (await fs.readdir(manifestDir).catch(() => []))
+      .filter((file) => file.startsWith('visual-manifest-') && file.endsWith('.json'))
+      .sort();
+
+    if (!manifestFiles.length) continue;
+
+    return {
+      archiveTimestamp,
+      archiveRoot,
+      manifestPath: path.join(manifestDir, manifestFiles[manifestFiles.length - 1]),
+      snapshotDir,
+    };
+  }
+
+  return null;
+};
+
+const patchRouteSelectors = (route) => {
+  switch (route.kind) {
+    case 'collectionIndex':
+      return {
+        ...route,
+        readySelectors: route.hasItems ? ['.artwork-card-grid'] : ['.collection-page__empty'],
+        errorSelectors: ['.collection-page__empty--error'],
+      };
+    case 'artistsIndex':
+      return {
+        ...route,
+        readySelectors: route.hasItems ? ['a.artist-card'] : ['.artists-page__empty'],
+        errorSelectors: ['.artists-page__empty--error'],
+      };
+    case 'artistDetail':
+      return {
+        ...route,
+        readySelectors: ['.artist-detail-main'],
+        errorSelectors: ['.artist-detail-error'],
+      };
+    case 'collectionDetail':
+      return {
+        ...route,
+        readySelectors: ['.collection-detail-main'],
+        errorSelectors: ['.collection-detail-error'],
+      };
+    case 'eventDetail':
+      return {
+        ...route,
+        readySelectors: ['.event-detail-container'],
+        errorSelectors: ['.event-detail-error'],
+      };
+    case 'newsDetail':
+      return {
+        ...route,
+        readySelectors: ['.news-detail-container'],
+        errorSelectors: ['.news-detail-error'],
+      };
+    default:
+      return route;
+  }
+};
+
+export const prepareVisualManifest = async ({ manifestPath, outputPath }) => {
+  const raw = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
+  const manifest = {
+    ...raw,
+    generatedAt: new Date().toISOString(),
+    routes: Array.isArray(raw.routes) ? raw.routes.map((route) => patchRouteSelectors(route)) : [],
+  };
+
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  await fs.writeFile(outputPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  return manifest;
+};
+
 const readJson = async (filePath) => {
   try {
     const raw = await fs.readFile(filePath, 'utf8');

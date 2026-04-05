@@ -36,27 +36,47 @@ const parseLocales = (value) => {
 };
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const retryableStatuses = new Set([429, 500, 502, 503, 504]);
+const fetchTimeoutMs = parsePositiveInt(process.env.VISUAL_MANIFEST_FETCH_TIMEOUT_MS) || 10_000;
+const maxRetryAttempts = parsePositiveInt(process.env.VISUAL_MANIFEST_MAX_RETRIES) || 3;
+
 export const fetchJson = async (url, attempt = 0) => {
-  const response = await fetch(url);
-  if (response.ok) return response.json();
-  if (retryableStatuses.has(response.status) && attempt < 3) {
-    const retryAfter = Number(response.headers.get('retry-after') || '0') * 1000;
-    const delay = Math.max(retryAfter, 1000 * (attempt + 1));
-    console.warn('[RouteManifest] Retrying request', { url, status: response.status, attempt, delay });
-    await sleep(delay);
-    return fetchJson(url, attempt + 1);
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), fetchTimeoutMs);
+
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (response.ok) return response.json();
+    if (retryableStatuses.has(response.status) && attempt < maxRetryAttempts) {
+      const retryAfter = Number(response.headers.get('retry-after') || '0') * 1000;
+      const delay = Math.max(retryAfter, 1000 * 2 ** attempt);
+      console.warn('[RouteManifest] Retrying request', { url, status: response.status, attempt, delay });
+      await sleep(delay);
+      return fetchJson(url, attempt + 1);
+    }
+    throw new Error(`Failed to fetch ${url} (${response.status})`);
+  } catch (error) {
+    if (error?.name === 'AbortError' && attempt < maxRetryAttempts) {
+      const delay = 1000 * 2 ** attempt;
+      console.warn('[RouteManifest] Request timed out', { url, attempt, timeoutMs: fetchTimeoutMs, delay });
+      await sleep(delay);
+      return fetchJson(url, attempt + 1);
+    }
+
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
   }
-  throw new Error(`Failed to fetch ${url} (${response.status})`);
 };
 
 export const fetchAllPages = async ({ apiUrl, endpoint, limit = 100, cap = null, label = endpoint }) => {
   const results = [];
   let page = 1;
+  const effectiveLimit = cap ? Math.min(limit, cap) : limit;
 
   while (true) {
     const url = new URL(`${apiUrl}${endpoint}`);
     url.searchParams.set('page', String(page));
-    url.searchParams.set('limit', String(limit));
+    url.searchParams.set('limit', String(effectiveLimit));
 
     const payload = await fetchJson(url.toString());
     const items = payload?.data?.data || [];
@@ -74,7 +94,7 @@ export const fetchAllPages = async ({ apiUrl, endpoint, limit = 100, cap = null,
 
     if (items.length === 0) break;
     if (cap && results.length >= cap) break;
-    if (!total || page * limit >= total) break;
+    if (!total || page * effectiveLimit >= total) break;
     page += 1;
   }
 
@@ -102,7 +122,7 @@ const buildStaticRoutes = (locales) => {
   return routes;
 };
 
-const buildListRoute = ({ locale, kind, label, hasItems, screenshotKey, readySelector, emptySelector }) => ({
+const buildListRoute = ({ locale, kind, label, hasItems, screenshotKey, readySelector, emptySelector, errorSelector = null }) => ({
   path: `/${locale}/${kind.replace(/Index$/, '').toLowerCase()}`,
   locale,
   kind,
@@ -110,9 +130,21 @@ const buildListRoute = ({ locale, kind, label, hasItems, screenshotKey, readySel
   screenshotKey: `${locale}/${screenshotKey}`,
   expectedState: hasItems ? 'items' : 'empty',
   readySelectors: hasItems ? [readySelector] : [emptySelector],
-  errorSelectors: [],
+  errorSelectors: errorSelector ? [errorSelector] : [],
   hasItems,
 });
+
+const fetchListOrEmpty = async (options) => {
+  try {
+    return await fetchAllPages(options);
+  } catch (error) {
+    console.warn('[RouteManifest] Falling back to empty list after failed fetch', {
+      label: options.label || options.endpoint,
+      error,
+    });
+    return [];
+  }
+};
 
 const buildDetailRoute = ({ locale, kind, label, id, screenshotKey, readySelector, errorSelector, pathPrefix }) => ({
   path: `/${locale}/${pathPrefix}/${id}`,
@@ -145,10 +177,10 @@ export const buildRouteManifest = async ({
   const [artists, artworks, events, news] = staticOnly
     ? [[], [], [], []]
     : await Promise.all([
-        fetchAllPages({ apiUrl: normalizedApiUrl, endpoint: '/api/public/artists', limit: 100, cap: maxArtists, label: 'artists' }),
-        fetchAllPages({ apiUrl: normalizedApiUrl, endpoint: '/api/public/artworks', limit: 100, cap: maxArtworks, label: 'artworks' }),
-        fetchAllPages({ apiUrl: normalizedApiUrl, endpoint: '/api/public/events', limit: 100, cap: maxEvents, label: 'events' }),
-        fetchAllPages({ apiUrl: normalizedApiUrl, endpoint: '/api/public/news', limit: 100, cap: maxNews, label: 'news' }),
+        fetchListOrEmpty({ apiUrl: normalizedApiUrl, endpoint: '/api/public/artists', limit: 100, cap: maxArtists, label: 'artists' }),
+        fetchListOrEmpty({ apiUrl: normalizedApiUrl, endpoint: '/api/public/artworks', limit: 100, cap: maxArtworks, label: 'artworks' }),
+        fetchListOrEmpty({ apiUrl: normalizedApiUrl, endpoint: '/api/public/events', limit: 100, cap: maxEvents, label: 'events' }),
+        fetchListOrEmpty({ apiUrl: normalizedApiUrl, endpoint: '/api/public/news', limit: 100, cap: maxNews, label: 'news' }),
       ]);
 
   const routes = buildStaticRoutes(locales);
@@ -164,6 +196,7 @@ export const buildRouteManifest = async ({
           screenshotKey: 'collection/index',
           readySelector: '.artwork-card-grid',
           emptySelector: '.collection-page__empty',
+          errorSelector: '.collection-page__empty--error',
         }),
         buildListRoute({
           locale,
@@ -173,6 +206,7 @@ export const buildRouteManifest = async ({
           screenshotKey: 'artists/index',
           readySelector: 'a.artist-card',
           emptySelector: '.artists-page__empty',
+          errorSelector: '.artists-page__empty--error',
         }),
         buildListRoute({
           locale,
@@ -203,7 +237,7 @@ export const buildRouteManifest = async ({
             label: 'Artist detail',
             id: artist.id,
             screenshotKey: `artists/${artist.id}`,
-            readySelector: '.artist-detail-page',
+            readySelector: '.artist-detail-main',
             errorSelector: '.artist-detail-error',
             pathPrefix: 'artists',
           })
@@ -219,7 +253,7 @@ export const buildRouteManifest = async ({
             label: 'Collection detail',
             id: artwork.id,
             screenshotKey: `collection/${artwork.id}`,
-            readySelector: '.collection-detail-page',
+            readySelector: '.collection-detail-main',
             errorSelector: '.collection-detail-error',
             pathPrefix: 'collection',
           })
@@ -236,7 +270,7 @@ export const buildRouteManifest = async ({
           slug: event.slug,
           screenshotKey: `${locale}/events/${event.slug}`,
           expectedState: 'detail',
-          readySelectors: ['.event-detail-page'],
+          readySelectors: ['.event-detail-container'],
           errorSelectors: ['.event-detail-error'],
         });
       });
@@ -251,7 +285,7 @@ export const buildRouteManifest = async ({
           slug: article.slug,
           screenshotKey: `${locale}/news/${article.slug}`,
           expectedState: 'detail',
-          readySelectors: ['.news-detail-page'],
+          readySelectors: ['.news-detail-container'],
           errorSelectors: ['.news-detail-error'],
         });
       });

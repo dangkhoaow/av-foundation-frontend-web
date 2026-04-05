@@ -174,7 +174,11 @@ export const artistsAPI = {
    * console.log(response.data.meta); // { page: 1, limit: 24, total: 26 }
    */
   getAll: async (page: number = 1, limit: number = 24): Promise<ArtistsApiResponse> => {
-    return apiClient.get<ArtistsApiResponse>(`/api/public/artists?page=${page}&limit=${limit}`);
+    return apiClient.get<ArtistsApiResponse>(
+      `/api/public/artists?page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
+    );
   },
 
   /**
@@ -189,7 +193,9 @@ export const artistsAPI = {
    */
   getById: async (id: string): Promise<ArtistDetail> => {
     const response = await apiClient.get<ArtistDetailApiResponse>(
-      `/api/public/artists/${id}`
+      `/api/public/artists/${id}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
     return response.data;
   },
@@ -207,7 +213,9 @@ export const artistsAPI = {
    */
   search: async (query: string, page: number = 1, limit: number = 24): Promise<ArtistsApiResponse> => {
     return apiClient.get<ArtistsApiResponse>(
-      `/api/public/artists?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`
+      `/api/public/artists?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 };

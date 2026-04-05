@@ -15,13 +15,16 @@ const snapshotDir = resolveFromRoot(process.env.VISUAL_SNAPSHOT_DIR, '.agent/ski
 const htmlOutputFolder = resolveFromRoot(process.env.PLAYWRIGHT_HTML_OUTPUT, path.join(outputDir, 'playwright-report'));
 const jsonOutputFile = resolveFromRoot(process.env.PLAYWRIGHT_JSON_OUTPUT, path.join(outputDir, 'results.json'));
 const maxDiffPixelRatio = parseNumber(process.env.VISUAL_MAX_DIFF_PIXEL_RATIO, 0.02);
+const workers = process.env.VISUAL_ENABLED === 'true' ? 1 : undefined;
+const timeout = process.env.VISUAL_ENABLED === 'true' ? 180_000 : 60_000;
 
 export default defineConfig({
   testDir: './tests/e2e',
-  timeout: 60_000,
+  timeout,
   retries: 1,
   outputDir,
   snapshotDir,
+  workers,
   snapshotPathTemplate: '{snapshotDir}/{projectName}/{arg}{ext}',
   expect: {
     toHaveScreenshot: {

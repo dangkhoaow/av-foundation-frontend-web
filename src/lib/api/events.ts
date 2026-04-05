@@ -175,7 +175,9 @@ export const eventsAPI = {
     sortOrder: 'asc' | 'desc' = 'desc'
   ): Promise<EventsApiResponse> => {
     return apiClient.get<EventsApiResponse>(
-      `/api/public/events?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      `/api/public/events?page=${page}&limit=${limit}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 
@@ -190,7 +192,9 @@ export const eventsAPI = {
    */
   getById: async (id: string): Promise<Event> => {
     const response = await apiClient.get<EventDetailApiResponse>(
-      `/api/public/events/${id}`
+      `/api/public/events/${id}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
     return response.data;
   },
@@ -212,7 +216,9 @@ export const eventsAPI = {
     limit: number = 12
   ): Promise<EventsApiResponse> => {
     return apiClient.get<EventsApiResponse>(
-      `/api/public/events?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`
+      `/api/public/events?search=${encodeURIComponent(query)}&page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 
@@ -232,7 +238,9 @@ export const eventsAPI = {
     limit: number = 12
   ): Promise<EventsApiResponse> => {
     return apiClient.get<EventsApiResponse>(
-      `/api/public/events?status=${status}&page=${page}&limit=${limit}`
+      `/api/public/events?status=${status}&page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 
@@ -252,7 +260,9 @@ export const eventsAPI = {
     limit: number = 12
   ): Promise<EventsApiResponse> => {
     return apiClient.get<EventsApiResponse>(
-      `/api/public/events?category=${encodeURIComponent(category)}&page=${page}&limit=${limit}`
+      `/api/public/events?category=${encodeURIComponent(category)}&page=${page}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
   },
 };

@@ -45,7 +45,9 @@ export const featuredArtworksAPI = {
    */
   getAll: async (locale: 'vi' | 'en' = 'vi', limit: number = 8): Promise<FeaturedArtwork[]> => {
     const response = await apiClient.get<FeaturedArtworksApiResponse>(
-      `/api/public/featured-artworks?locale=${locale}&limit=${limit}`
+      `/api/public/featured-artworks?locale=${locale}&limit=${limit}`,
+      undefined,
+      { maxAttempts: 1, timeoutMs: 20_000 }
     );
 
     // Transform images to full URLs

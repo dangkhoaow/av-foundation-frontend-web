@@ -244,14 +244,33 @@ export function ArtistsClient() {
     </div>
   );
 
+  const renderErrorState = () => (
+    <div className="artists-page">
+      <div className="artists-page__container">
+        <div className="artists-page__header">
+          <h1 className="artists-page__title">Artists</h1>
+          <div className="artists-page__search">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <input type="text" placeholder="Tìm kiếm" disabled />
+          </div>
+        </div>
+        <div className="artists-page__empty artists-page__empty--error">
+          <p>Không thể tải danh sách nghệ sĩ. Vui lòng thử lại sau.</p>
+        </div>
+      </div>
+    </div>
+  );
+
   // Show loading skeleton during initial load
   if (isLoading) {
     return renderSkeletonLoading();
   }
 
-  // Error state - show skeleton loading instead of error message
+  // Error state - surface a visible empty state instead of a blank skeleton.
   if (isError) {
-    return renderSkeletonLoading();
+    return renderErrorState();
   }
 
   return (

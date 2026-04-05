@@ -22,6 +22,7 @@ export const writeRunReport = async ({
   visualEnabled,
   baselineBaseUrl,
   compareBaseUrl,
+  baselineSource,
   manifestPath,
   manifestSummary,
   phases,
@@ -38,6 +39,7 @@ export const writeRunReport = async ({
     `- Visual enabled: ${visualEnabled ? 'yes' : 'no'}`,
     `- Baseline URL: ${baselineBaseUrl}`,
     `- Compare URL: ${compareBaseUrl}`,
+    `- Baseline source: ${baselineSource || 'live'}`,
     manifestPath ? `- Visual manifest: ${toRepoRelative(manifestPath)}` : '- Visual manifest: not generated',
   ];
 

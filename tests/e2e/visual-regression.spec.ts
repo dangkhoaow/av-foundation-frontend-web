@@ -83,25 +83,40 @@ const waitForRouteReady = async (page: Page, route: VisualRoute) => {
   }
 
   const errorSelectors = route.errorSelectors || [];
-  for (const selector of errorSelectors) {
-    const locator = page.locator(selector).first();
-    if (await locator.isVisible().catch(() => false)) {
-      throw new Error(`Route ${route.path} rendered an error state: ${selector}`);
-    }
-  }
-
   const readySelectors = route.readySelectors || [];
   if (!readySelectors.length) return;
 
-  await Promise.any(
-    readySelectors.map((selector) =>
-      page.locator(selector).first().waitFor({ state: 'visible', timeout: 30_000 })
-    )
-  ).catch((error) => {
-    throw new Error(
-      `Route ${route.path} did not reach a ready state (${readySelectors.join(', ')}): ${error instanceof Error ? error.message : String(error)}`
-    );
-  });
+  const readyStateHandle = await page.waitForFunction(
+    ({ readySelectors: routeReadySelectors, errorSelectors: routeErrorSelectors }) => {
+      const isVisible = (selector: string) =>
+        Array.from(document.querySelectorAll(selector)).some((element) => {
+          const htmlElement = element as HTMLElement;
+          const style = window.getComputedStyle(htmlElement);
+          return style.display !== 'none' && style.visibility !== 'hidden' && htmlElement.getClientRects().length > 0;
+        });
+
+      if ((routeErrorSelectors || []).some((selector) => isVisible(selector))) {
+        return 'error';
+      }
+
+      if ((routeReadySelectors || []).some((selector) => isVisible(selector))) {
+        return 'ready';
+      }
+
+      return false;
+    },
+    {
+      readySelectors,
+      errorSelectors,
+    },
+    { timeout: 30_000 }
+  );
+
+  const readyState = await readyStateHandle.jsonValue() as 'ready' | 'error';
+
+  if (readyState === 'error') {
+    throw new Error(`Route ${route.path} rendered an error state (${errorSelectors.join(', ')})`);
+  }
 };
 
 test.describe.configure({ mode: 'parallel' });

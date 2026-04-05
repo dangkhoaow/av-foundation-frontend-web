@@ -24,7 +24,11 @@ export interface HomepageConfigResponse {
 export const homepageConfigAPI = {
     get: async (): Promise<HomepageConfig | null> => {
         try {
-            const response = await apiClient.get<HomepageConfigResponse>('/api/public/homepage-config');
+            const response = await apiClient.get<HomepageConfigResponse>(
+                '/api/public/homepage-config',
+                undefined,
+                { maxAttempts: 1, timeoutMs: 20_000 }
+            );
             return response.data;
         } catch (error) {
             console.error('Failed to fetch homepage config:', error);

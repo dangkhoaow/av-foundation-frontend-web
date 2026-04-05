@@ -1,4 +1,4 @@
-# av-foundation-frontend-web
+# av-foundation-frontend-web 
 
 ## Overview
 - Static GitHub Pages frontend for Art & Venture Foundation.
