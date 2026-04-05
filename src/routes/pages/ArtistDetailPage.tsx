@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArtistDetailClient } from '@/app/[locale]/artists/[id]/ArtistDetailClient';
-import { artistsAPI, type Artist } from '@/lib/api';
+import { artistsAPI, type ArtistDetail } from '@/lib/api';
 
 export function ArtistDetailPage() {
   const { id } = useParams();
-  const [artist, setArtist] = useState<Artist | null>(null);
+  const [artist, setArtist] = useState<ArtistDetail | null>(null);
   const [error, setError] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,6 +16,7 @@ export function ArtistDetailPage() {
       if (!id) {
         setError('Missing artist id.');
         setIsLoading(false);
+        console.warn('[ArtistDetail] Missing artist id', { id });
         return;
       }
 
@@ -27,16 +28,17 @@ export function ArtistDetailPage() {
 
         if (!isActive) return;
 
-        if (!response.success || !response.data) {
+        if (!response || !response.id) {
           setError('Failed to load artist.');
           setArtist(null);
           setIsLoading(false);
+          console.error('[ArtistDetail] Invalid artist response', { id, response });
           return;
         }
 
-        setArtist(response.data);
+        setArtist(response);
         setIsLoading(false);
-        console.info('[ArtistDetail] Artist loaded', { artistId: response.data.id });
+        console.info('[ArtistDetail] Artist loaded', { artistId: response.id });
       } catch (fetchError) {
         if (!isActive) return;
         console.error('[ArtistDetail] Failed to load artist', { error: fetchError });

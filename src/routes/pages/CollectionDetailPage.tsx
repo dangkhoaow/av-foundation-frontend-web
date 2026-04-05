@@ -16,6 +16,7 @@ export function CollectionDetailPage() {
       if (!artworkKey) {
         setError('Missing artwork id.');
         setIsLoading(false);
+        console.warn('[CollectionDetail] Missing artwork id', { artworkKey });
         return;
       }
 
@@ -27,16 +28,17 @@ export function CollectionDetailPage() {
 
         if (!isActive) return;
 
-        if (!response.success || !response.data) {
+        if (!response || !response.id) {
           setError('Failed to load artwork.');
           setArtwork(null);
           setIsLoading(false);
+          console.error('[CollectionDetail] Invalid artwork response', { artworkKey, response });
           return;
         }
 
-        setArtwork(response.data);
+        setArtwork(response);
         setIsLoading(false);
-        console.info('[CollectionDetail] Artwork loaded', { artworkId: response.data.id });
+        console.info('[CollectionDetail] Artwork loaded', { artworkId: response.id });
       } catch (fetchError) {
         if (!isActive) return;
         console.error('[CollectionDetail] Failed to load artwork', { error: fetchError });
