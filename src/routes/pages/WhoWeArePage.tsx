@@ -1,3 +1,4 @@
+import { withBasePath } from '@/lib/assets';
 import '@/app/[locale]/who-we-are/WhoWeArePage.css';
 
 export function WhoWeArePage() {
@@ -7,7 +8,7 @@ export function WhoWeArePage() {
         <h1 className="who-we-are-title">Who We Are</h1>
 
         <div className="who-we-are-hero">
-          <img src="/images/who-we-are/hero.jpg" alt="Who We Are" />
+          <img src={withBasePath('/images/who-we-are/hero.jpg')} alt="Who We Are" />
         </div>
 
         <div className="who-we-are-content">

@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { withBasePath } from '@/lib/assets';
 import './Card.css';
 
 export interface CardProps {
@@ -89,7 +90,7 @@ export const CardImage = ({
   className?: string;
 }) => (
   <div className={`ds-card__image-container ds-card__image--${aspectRatio} ${className}`}>
-    <img src={src} alt={alt} className="ds-card__image" loading="lazy" />
+    <img src={withBasePath(src)} alt={alt} className="ds-card__image" loading="lazy" />
   </div>
 );
 

@@ -5,6 +5,7 @@
 
 import { apiClient } from './client';
 import { env } from '@/config/env';
+import { resolveImageUrl } from '@/lib/assets';
 
 // ========================
 // INTERFACES
@@ -76,20 +77,7 @@ export interface EventDetailApiResponse {
  * @returns Full URL or null
  */
 export const getEventImageUrl = (imagePath: string | null): string | null => {
-  if (!imagePath) return null;
-  
-  // If it's already a full URL, return as is
-  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-    return imagePath;
-  }
-  
-  // Construct full URL
-  try {
-    return new URL(imagePath, env.imageBaseUrl).href;
-  } catch (error) {
-    console.error('Invalid event image URL:', { imagePath, baseUrl: env.imageBaseUrl }, error);
-    return null;
-  }
+  return resolveImageUrl(imagePath, env.imageBaseUrl);
 };
 
 /**

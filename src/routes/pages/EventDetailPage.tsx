@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { eventsAPI, getEventTitle, getEventDescription, getEventExcerpt, getEventImageUrl, type Event } from '@/lib/api/events';
+import { withBasePath } from '@/lib/assets';
 import { useLocale } from '@/i18n/LocaleProvider';
 import '@/app/[locale]/events/[id]/EventDetailPage.css';
 
@@ -60,7 +61,7 @@ export function EventDetailPage() {
     const title = getEventTitle(event, locale);
     const subtitle = getEventExcerpt(event, locale) || getEventDescription(event, locale);
     const description = getEventDescription(event, locale);
-    const heroImage = getEventImageUrl(event.featuredImage) || '/images/event-detail/hero-1.jpg';
+    const heroImage = getEventImageUrl(event.featuredImage) || withBasePath('/images/event-detail/hero-1.jpg');
 
     return {
       title,

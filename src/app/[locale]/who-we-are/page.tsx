@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { withBasePath } from '@/lib/assets';
 import './WhoWeArePage.css';
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export default function WhoWeArePage() {
         <h1 className="who-we-are-title">Who We Are</h1>
         
         <div className="who-we-are-hero">
-          <img src="/images/who-we-are/hero.jpg" alt="Who We Are" />
+          <img src={withBasePath('/images/who-we-are/hero.jpg')} alt="Who We Are" />
         </div>
 
         <div className="who-we-are-content">

@@ -10,6 +10,7 @@ import { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import Link from 'next/link';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { artistsAPI, getArtistImageUrl, type Artist as APIArtist } from '@/lib/api';
+import { withBasePath } from '@/lib/assets';
 import './ArtistsPage.css';
 
 interface Artist {
@@ -310,7 +311,7 @@ export function ArtistsClient() {
                   >
                     <div className="artist-card__image">
                       <img
-                        src={artist.portraitImage || `/images/artists/portrait-${(index % 4) + 1}.jpg`}
+                        src={artist.portraitImage || withBasePath(`/images/artists/portrait-${(index % 4) + 1}.jpg`)}
                         alt={artist.fullName}
                         // If already loaded before, show instantly with 'loaded' class
                         className={wasLoaded ? 'loaded instant' : ''}

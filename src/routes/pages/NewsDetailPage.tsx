@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NewsDetailClient from '@/app/[locale]/news/[id]/NewsDetailClient';
 import { newsAPI, getNewsTitle, getNewsExcerpt, getNewsContent, getNewsImageUrl, type NewsArticle } from '@/lib/api/news';
+import { withBasePath } from '@/lib/assets';
 import { useLocale } from '@/i18n/LocaleProvider';
 
 const splitParagraphs = (text: string): string[] => {
@@ -60,8 +61,8 @@ export function NewsDetailPage() {
     const title = getNewsTitle(article, locale);
     const subtitle = getNewsExcerpt(article, locale) || '';
     const contentText = getNewsContent(article, locale);
-    const heroImage = getNewsImageUrl(article.featuredImage) || '/images/news-detail/hero-1.jpg';
-    const contentImage = heroImage || '/images/news-detail/content-1.jpg';
+    const heroImage = getNewsImageUrl(article.featuredImage) || withBasePath('/images/news-detail/hero-1.jpg');
+    const contentImage = heroImage || withBasePath('/images/news-detail/content-1.jpg');
     const paragraphs = splitParagraphs(contentText);
     const midPoint = Math.max(1, Math.ceil(paragraphs.length / 2));
 

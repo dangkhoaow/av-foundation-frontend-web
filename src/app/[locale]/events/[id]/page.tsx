@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { withBasePath } from '@/lib/assets';
 import './EventDetailPage.css';
 
 export const metadata: Metadata = {
@@ -19,8 +20,8 @@ export default function EventDetailPage({ params }: EventDetailPageProps) {
     id: params.id,
     title: "Gallery exhibition of A&V Foundation Mid 2025",
     subtitle: "Lorem ipsum dolor sit amet consectetur. Urna mauris amet ipsum risus pharetra mi nam turpis. Urna convallis cras nibh ullamcorper mi amet. Dolor sit sed accumsan et scelerisque sed quis.",
-    heroImage: "/images/event-detail/hero-1.jpg",
-    contentImage: "/images/event-detail/content-1.jpg",
+    heroImage: withBasePath("/images/event-detail/hero-1.jpg"),
+    contentImage: withBasePath("/images/event-detail/content-1.jpg"),
     content: [
       "Lorem ipsum dolor sit amet consectetur. Massa turpis ullamcorper eget elementum feugiat sit quam dolor. Mauris in convallis interdum facilisis platea sapien. Scelerisque porttitor iaculis in mauris elementum eu vulputate. Viverra neque sit ridiculus orci amet quisque sodales sapien sollicitudin.",
       "Lorem ipsum dolor sit amet consectetur. Pellentesque viverra adipiscing vel dignissim elementum sed. Cum nec morbi posuere in hendrerit semper a ac massa. Blandit enim eu mauris lacus accumsan. Sit integer magna purus tincidunt in ipsum. Egestas nam nec suscipit dignissim tincidunt ac. Consequat volutpat odio tortor a nulla volutpat vehicula quis pharetra. Orci cursus consectetur vitae sit pulvinar tellus. Amet tortor.",

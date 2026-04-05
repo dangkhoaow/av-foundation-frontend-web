@@ -11,6 +11,12 @@ export interface ApiError {
   data?: any;
 }
 
+const RETRYABLE_STATUS_CODES = new Set([408, 429, 500, 502, 503, 504]);
+const MAX_RETRY_ATTEMPTS = 2;
+const BASE_RETRY_DELAY_MS = 1000;
+
+const sleep = (delayMs: number) => new Promise<void>((resolve) => setTimeout(resolve, delayMs));
+
 export class ApiClient {
   private baseURL: string;
   private timeout: number;
@@ -27,30 +33,65 @@ export class ApiClient {
     }
   }
 
+  private getRetryDelayMs(retryAfterHeader: string | null, attempt: number): number {
+    if (retryAfterHeader) {
+      const retryAfterSeconds = Number(retryAfterHeader);
+      if (Number.isFinite(retryAfterSeconds) && retryAfterSeconds > 0) {
+        return retryAfterSeconds * 1000;
+      }
+
+      const retryAfterDate = Date.parse(retryAfterHeader);
+      if (Number.isFinite(retryAfterDate)) {
+        return Math.max(retryAfterDate - Date.now(), BASE_RETRY_DELAY_MS * (attempt + 1));
+      }
+    }
+
+    return BASE_RETRY_DELAY_MS * 2 ** attempt;
+  }
+
   private async request<T>(
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
+    const method = (options.method || 'GET').toUpperCase();
+    const canRetry = method === 'GET' || method === 'HEAD';
+    const maxAttempts = canRetry ? MAX_RETRY_ATTEMPTS + 1 : 1;
     
-    // Create abort controller for timeout
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
-    try {
-      const response = await fetch(url, {
-        ...options,
-        headers: {
-          ...this.headers,
-          ...options.headers,
-        },
-        signal: controller.signal,
-      });
+      try {
+        const response = await fetch(url, {
+          ...options,
+          headers: {
+            ...this.headers,
+            ...options.headers,
+          },
+          signal: controller.signal,
+        });
 
-      clearTimeout(timeoutId);
+        if (response.ok) {
+          const data = await response.json();
+          clearTimeout(timeoutId);
+          return data as T;
+        }
 
-      // Handle non-OK responses
-      if (!response.ok) {
+        if (canRetry && RETRYABLE_STATUS_CODES.has(response.status) && attempt < maxAttempts - 1) {
+          const retryDelayMs = this.getRetryDelayMs(response.headers.get('Retry-After'), attempt);
+          console.warn('[ApiClient] Retrying request after HTTP error', {
+            url,
+            method,
+            status: response.status,
+            attempt: attempt + 1,
+            retryDelayMs,
+          });
+          clearTimeout(timeoutId);
+          await sleep(retryDelayMs);
+          continue;
+        }
+
         const error: ApiError = {
           message: response.statusText,
           status: response.status,
@@ -58,37 +99,70 @@ export class ApiClient {
 
         try {
           error.data = await response.json();
-        } catch (e) {
-          // Response body is not JSON
+        } catch (parseError) {
+          // Response body is not JSON.
         }
 
+        clearTimeout(timeoutId);
         throw error;
-      }
+      } catch (error: any) {
+        clearTimeout(timeoutId);
 
-      // Parse JSON response
-      const data = await response.json();
-      return data as T;
-    } catch (error: any) {
-      clearTimeout(timeoutId);
+        if (error?.name === 'AbortError') {
+          if (canRetry && attempt < maxAttempts - 1) {
+            const retryDelayMs = this.getRetryDelayMs(null, attempt);
+            console.warn('[ApiClient] Retrying request after timeout', {
+              url,
+              method,
+              status: 408,
+              attempt: attempt + 1,
+              retryDelayMs,
+            });
+            await sleep(retryDelayMs);
+            continue;
+          }
 
-      // Handle abort/timeout
-      if (error.name === 'AbortError') {
+          throw {
+            message: 'Request timeout',
+            status: 408,
+          } as ApiError;
+        }
+
+        if (error?.status) {
+          if (canRetry && RETRYABLE_STATUS_CODES.has(error.status) && attempt < maxAttempts - 1) {
+            const retryDelayMs = this.getRetryDelayMs(null, attempt);
+            console.warn('[ApiClient] Retrying request after API error', {
+              url,
+              method,
+              status: error.status,
+              attempt: attempt + 1,
+              retryDelayMs,
+            });
+            await sleep(retryDelayMs);
+            continue;
+          }
+
+          throw error as ApiError;
+        }
+
+        if (canRetry && attempt < maxAttempts - 1) {
+          const retryDelayMs = this.getRetryDelayMs(null, attempt);
+          console.warn('[ApiClient] Retrying request after network error', {
+            url,
+            method,
+            status: 0,
+            attempt: attempt + 1,
+            retryDelayMs,
+          });
+          await sleep(retryDelayMs);
+          continue;
+        }
+
         throw {
-          message: 'Request timeout',
-          status: 408,
+          message: error?.message || 'Network error',
+          status: 0,
         } as ApiError;
       }
-
-      // Re-throw API errors
-      if (error.status) {
-        throw error as ApiError;
-      }
-
-      // Handle network errors
-      throw {
-        message: error.message || 'Network error',
-        status: 0,
-      } as ApiError;
     }
   }
 

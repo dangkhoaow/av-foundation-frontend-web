@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import NewsDetailClient from './NewsDetailClient';
+import { withBasePath } from '@/lib/assets';
 
 export const metadata: Metadata = {
   title: 'News Detail',
@@ -18,8 +19,8 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
     id: params.id,
     title: "Lorem ipsum dolor sit amet consectetur",
     subtitle: "Lorem ipsum dolor sit amet consectetur. Urna mauris amet ipsum risus pharetra mi nam turpis. Urna convallis cras nibh ullamcorper mi amet. Dolor sit sed accumsan et scelerisque sed quis.",
-    heroImage: "/images/news-detail/hero-1.jpg",
-    contentImage: "/images/news-detail/content-1.jpg",
+    heroImage: withBasePath("/images/news-detail/hero-1.jpg"),
+    contentImage: withBasePath("/images/news-detail/content-1.jpg"),
     content: [
       "Lorem ipsum dolor sit amet consectetur. Massa turpis ullamcorper eget elementum feugiat sit quam dolor. Mauris in convallis interdum facilisis platea sapien. Scelerisque porttitor iaculis in mauris elementum eu vulputate. Viverra neque sit ridiculus orci amet quisque sodales sapien sollicitudin.",
       "Lorem ipsum dolor sit amet consectetur. Pellentesque viverra adipiscing vel dignissim elementum sed. Cum nec morbi posuere in hendrerit semper a ac massa. Blandit enim eu mauris lacus accumsan. Sit integer magna purus tincidunt in ipsum. Egestas nam nec suscipit dignissim tincidunt ac. Consequat volutpat odio tortor a nulla volutpat vehicula quis pharetra. Orci cursus consectetur vitae sit pulvinar tellus. Amet tortor.",

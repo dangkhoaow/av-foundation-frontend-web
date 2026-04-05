@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { eventsAPI, getEventTitle, getEventDescription, getEventImageUrl, type Event } from '@/lib/api/events';
+import { withBasePath } from '@/lib/assets';
 import { Card } from '@/design-system/molecules/Card';
 import { useLocale, useTranslations } from '@/i18n/LocaleProvider';
 import '@/app/[locale]/events/EventsPage.css';
@@ -56,7 +57,7 @@ export function EventsPage() {
             {events.map((event) => {
               const title = getEventTitle(event, locale);
               const description = getEventDescription(event, locale);
-              const image = getEventImageUrl(event.featuredImage) || '/images/placeholders/event-placeholder.jpg';
+              const image = getEventImageUrl(event.featuredImage) || withBasePath('/images/placeholders/event-placeholder.jpg');
 
               return (
                 <Link

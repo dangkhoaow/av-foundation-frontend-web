@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { eventsAPI, getEventTitle, getEventDescription, getEventImageUrl } from '@/lib/api/events';
+import { withBasePath } from '@/lib/assets';
 import { Card } from '@/design-system/molecules/Card';
 import './EventsPage.css';
 
@@ -42,7 +43,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
             {events.map((event) => {
               const title = getEventTitle(event, locale as 'vi' | 'en');
               const description = getEventDescription(event, locale as 'vi' | 'en');
-              const image = getEventImageUrl(event.featuredImage) || '/images/placeholders/event-placeholder.jpg';
+              const image = getEventImageUrl(event.featuredImage) || withBasePath('/images/placeholders/event-placeholder.jpg');
 
               return (
                 <Link

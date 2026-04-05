@@ -5,6 +5,7 @@
 
 import { apiClient } from './client';
 import { env } from '@/config/env';
+import { resolveImageUrl } from '@/lib/assets';
 
 // Artist interface for artwork (simplified version used in artwork response)
 export interface ArtworkArtist {
@@ -55,21 +56,7 @@ export interface ArtworkApiResponse {
 
 // Helper function to get full image URL
 export const getImageUrl = (imagePath: string | null): string | null => {
-  if (!imagePath) return null;
-
-  // If it's already a full URL, return as is
-  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-    return imagePath;
-  }
-
-  // Use URL API to properly handle slashes and construct full URL
-  // This prevents double slashes like: https://domain.com//api/file/...
-  try {
-    return new URL(imagePath, env.imageBaseUrl).href;
-  } catch (error) {
-    console.error('Invalid image URL:', { imagePath, baseUrl: env.imageBaseUrl }, error);
-    return null;
-  }
+  return resolveImageUrl(imagePath, env.imageBaseUrl);
 };
 
 export const artworksAPI = {

@@ -8,6 +8,7 @@
 
 import { useEffect, useState } from 'react';
 import { eventsAPI, getEventTitle, getEventDescription, getEventImageUrl, type Event } from '@/lib/api/events';
+import { withBasePath } from '@/lib/assets';
 import { NewsEventsClient } from './NewsEventsClient';
 import './NewsEvents.css';
 
@@ -37,7 +38,7 @@ export function NewsEvents({ locale }: NewsEventsProps) {
           id: event.id,
           title: getEventTitle(event, locale),
           description: getEventDescription(event, locale),
-          image: getEventImageUrl(event.featuredImage) || '/images/placeholders/event-placeholder.jpg',
+          image: getEventImageUrl(event.featuredImage) || withBasePath('/images/placeholders/event-placeholder.jpg'),
           slug: event.slug,
         }));
 

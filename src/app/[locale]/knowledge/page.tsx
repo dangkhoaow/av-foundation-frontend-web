@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
+import { withBasePath } from '@/lib/assets';
 import './KnowledgePage.css';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -25,7 +26,7 @@ const articles: Article[] = Array.from({ length: 12 }, (_, i) => ({
   id: i + 1,
   title: `Kiến thức nghệ thuật ${i + 1}`,
   excerpt: 'Lorem ipsum dolor sit amet consectetur. Massa auctor justo lorem dictumst.',
-  image: `/images/knowledge/article-${(i % 4) + 1}.jpg`,
+  image: withBasePath(`/images/knowledge/article-${(i % 4) + 1}.jpg`),
   date: '15/11/2024',
 }));
 

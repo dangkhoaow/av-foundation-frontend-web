@@ -9,6 +9,7 @@
 import { useEffect, useState } from 'react';
 import { ArtCollectionClient } from './ArtCollectionClient';
 import { featuredArtworksAPI, type FeaturedArtwork } from '@/lib/api';
+import { withBasePath } from '@/lib/assets';
 import './ArtCollection.css';
 
 export interface Artwork {
@@ -57,7 +58,7 @@ export function ArtCollection({ locale = 'vi' }: ArtCollectionProps) {
           phone: '',
           description: art.dateCreated ? `Created in ${art.dateCreated}` : '',
           expandedContent: art.bio || 'Thông tin chi tiết về nghệ sĩ và tác phẩm đang được cập nhật...',
-          image: art.image || '/images/placeholder.jpg',
+          image: art.image || withBasePath('/images/placeholder.jpg'),
           socialLinks: {
             facebook: '#',
             instagram: '#',

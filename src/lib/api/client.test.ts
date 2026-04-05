@@ -5,6 +5,7 @@ const originalFetch = globalThis.fetch;
 
 afterEach(() => {
   globalThis.fetch = originalFetch;
+  vi.useRealTimers();
 });
 
 describe('ApiClient', () => {
@@ -33,5 +34,34 @@ describe('ApiClient', () => {
     await client.get('/api/test');
 
     expect(fetchSpy.mock.calls[0][0]).toBe('https://example.com/api/test');
+  });
+
+  it('retries once after a retryable response', async () => {
+    vi.useFakeTimers();
+
+    const fetchSpy = vi
+      .fn()
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 429,
+        statusText: 'Too Many Requests',
+        headers: {
+          get: () => null,
+        },
+        json: async () => ({ message: 'rate limited' }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ ok: true }),
+      });
+    globalThis.fetch = fetchSpy;
+
+    const client = new ApiClient('https://example.com', 5000);
+    const requestPromise = client.get('/api/test');
+
+    await vi.runAllTimersAsync();
+
+    await expect(requestPromise).resolves.toEqual({ ok: true });
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
   });
 });

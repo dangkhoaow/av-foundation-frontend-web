@@ -1,4 +1,5 @@
 import type { CSSProperties, ImgHTMLAttributes } from 'react';
+import { withBasePath } from '@/lib/assets';
 
 type ImageProps = Omit<ImgHTMLAttributes<HTMLImageElement>, 'src'> & {
   src: string;
@@ -28,14 +29,15 @@ export default function Image({
   ...rest
 }: ImageProps) {
   const resolvedStyle = fill ? buildFillStyle(style) : style;
+  const resolvedSrc = withBasePath(src);
 
   if (quality) {
-    console.info('[Image] quality prop ignored in static build', { src, quality });
+    console.info('[Image] quality prop ignored in static build', { src: resolvedSrc, quality });
   }
 
   return (
     <img
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       sizes={sizes}
       style={resolvedStyle}
