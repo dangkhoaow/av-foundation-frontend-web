@@ -15,8 +15,8 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
             gcTime: 30 * 60 * 1000,
             // Không refetch khi window focus lại
             refetchOnWindowFocus: false,
-            // Retry 2 lần nếu fail
-            retry: 2,
+            // ApiClient already retries retryable requests with backoff.
+            retry: 0,
           },
         },
       })

@@ -35,6 +35,26 @@ metadata:
 ```
 
 ## Current status
+## 2026-04-05 15:35
+### Shipped
+- Removed stacked TanStack Query retries so the global `QueryProvider` now lets `ApiClient` handle retryable 429/timeouts.
+- Cleared the explicit `retry`/`retryDelay` overrides from `ArtistsClient` and `CollectionClient` to reduce duplicate backend requests.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- `PLAYWRIGHT_OUTPUT_DIR=/tmp/... PLAYWRIGHT_HTML_OUTPUT=/tmp/... VISUAL_MANIFEST_PATH=.agent/skills/test-runner/visual/20260405-2214/manifests/visual-manifest-20260405-2214.json VISUAL_SNAPSHOT_DIR=.agent/skills/test-runner/visual/20260405-2214/baseline/snapshots E2E_BASE_URL=http://localhost:5173/av-foundation-frontend-web/ VISUAL_MAX_DIFF_PIXEL_RATIO=0.05 npx playwright test tests/e2e/visual-regression.spec.ts --project=mobile -g "collectionIndex @visual vi /vi/collection"`
+- The mobile `vi /vi/collection` visual comparison now passes against the baseline snapshots.
+
+### Not implemented yet
+- Full-suite confirmation after retry cleanup is still pending because the parallel rerun is long-running and continues to surface unrelated route retries.
+
+### Risks / blockers
+- The broad parallel visual runner is still the main source of noisy retries under load.
+- Other routes may still need a separate full rerun to confirm after the retry cleanup.
+
 ## 2026-04-05 15:18
 ### Shipped
 - Restored backend-based image resolution for API image fields via `resolveImageUrl` in `src/lib/assets.ts`, while keeping `withBasePath` for frontend static assets.

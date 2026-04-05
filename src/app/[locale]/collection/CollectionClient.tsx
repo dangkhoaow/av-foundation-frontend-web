@@ -167,9 +167,6 @@ export function CollectionClient() {
     staleTime: 5 * 60 * 1000,
     // Keep cache for 30 minutes
     gcTime: 30 * 60 * 1000,
-    // Retry 2 times on error
-    retry: 2,
-    retryDelay: 3000,
   });
 
   // Flatten all pages into single artworks array
