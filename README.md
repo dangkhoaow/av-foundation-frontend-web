@@ -78,7 +78,8 @@ const response = await artworksAPI.getAll(1, 12, { sortBy: 'createdAt', sortOrde
 - **Backend public APIs**: `av-foundation-backend/app/api/public/README.md`.
 - **Env vars**:
   - `VITE_API_URL`, `VITE_IMAGE_BASE_URL`, `VITE_SITE_URL`
-  - `PRERENDER_MAX_ARTWORKS`, `E2E_BASE_URL`
+  - `PRERENDER_MAX_ARTWORKS`, `PRERENDER_SKIP_API`, `PRERENDER_ALLOW_FAILURE`
+  - `E2E_BASE_URL`
   - `ISSUES_ENABLED`, `GITHUB_TOKEN`, `GITHUB_REPOSITORY`
 - **Artifacts**:
   - Plans: `.agent/skills/test-testing-plan/plans/test-plan-yyyymmdd-hhmm.md`

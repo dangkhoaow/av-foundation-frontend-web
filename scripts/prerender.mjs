@@ -10,9 +10,14 @@ const distDir = path.resolve(__dirname, '..', 'dist');
 
 const basePath = '/av-foundation-frontend-web';
 const siteUrl = (process.env.VITE_SITE_URL || 'https://dangkhoaow.github.io/av-foundation-frontend-web').replace(/\/$/, '');
-const apiUrl = (process.env.VITE_API_URL || process.env.API_URL || 'http://localhost:3001').replace(/\/$/, '');
+const rawApiUrl = process.env.VITE_API_URL || process.env.API_URL || '';
+const apiUrl = rawApiUrl ? rawApiUrl.replace(/\/$/, '') : '';
 const maxArtworks = Number(process.env.PRERENDER_MAX_ARTWORKS || '500');
 const port = Number(process.env.PRERENDER_PORT || '4173');
+const ci = process.env.CI === 'true';
+const apiUrlIsLocal = apiUrl.includes('localhost') || apiUrl.includes('127.0.0.1');
+const skipApi = process.env.PRERENDER_SKIP_API === 'true' || !apiUrl || (ci && apiUrlIsLocal);
+const allowApiFailure = process.env.PRERENDER_ALLOW_FAILURE === 'true';
 
 const locales = ['vi', 'en'];
 const staticPaths = ['', '/collection', '/artists', '/events', '/news', '/knowledge', '/who-we-are'];
@@ -23,6 +28,18 @@ const fetchJson = async (url) => {
     throw new Error(`Failed to fetch ${url} (${response.status})`);
   }
   return response.json();
+};
+
+const buildStaticRoutes = () => {
+  const routes = new Set();
+
+  locales.forEach((locale) => {
+    staticPaths.forEach((pathSuffix) => {
+      routes.add(`/${locale}${pathSuffix}`);
+    });
+  });
+
+  return Array.from(routes);
 };
 
 const fetchAllPages = async (endpoint, limit, cap) => {
@@ -57,12 +74,36 @@ const fetchAllPages = async (endpoint, limit, cap) => {
 };
 
 const buildRoutes = async () => {
-  const [artists, artworks, events, news] = await Promise.all([
-    fetchAllPages('/api/public/artists', 100),
-    fetchAllPages('/api/public/artworks', 100, maxArtworks),
-    fetchAllPages('/api/public/events', 100),
-    fetchAllPages('/api/public/news', 100),
-  ]);
+  if (skipApi) {
+    console.warn('[Prerender] API disabled, using static routes only', {
+      apiUrl: apiUrl || 'unset',
+      ci,
+      apiUrlIsLocal,
+      skipApi,
+    });
+    return buildStaticRoutes();
+  }
+
+  let artists = [];
+  let artworks = [];
+  let events = [];
+  let news = [];
+
+  try {
+    [artists, artworks, events, news] = await Promise.all([
+      fetchAllPages('/api/public/artists', 100),
+      fetchAllPages('/api/public/artworks', 100, maxArtworks),
+      fetchAllPages('/api/public/events', 100),
+      fetchAllPages('/api/public/news', 100),
+    ]);
+  } catch (error) {
+    console.error('[Prerender] API fetch failed', { error, apiUrl });
+    if (allowApiFailure) {
+      console.warn('[Prerender] Falling back to static routes due to API failure', { allowApiFailure });
+      return buildStaticRoutes();
+    }
+    throw error;
+  }
 
   const artworkKeys = new Set();
   artworks.forEach((artwork) => {
@@ -142,7 +183,14 @@ const renderRoutes = async (routes) => {
 };
 
 const run = async () => {
-  console.info('[Prerender] Starting prerender', { apiUrl, siteUrl, maxArtworks });
+  console.info('[Prerender] Starting prerender', {
+    apiUrl: apiUrl || 'unset',
+    siteUrl,
+    maxArtworks,
+    skipApi,
+    allowApiFailure,
+    ci,
+  });
 
   const routes = await buildRoutes();
   await writeSitemap(routes);

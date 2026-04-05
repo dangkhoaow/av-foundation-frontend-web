@@ -35,6 +35,27 @@ metadata:
 ```
 
 ## Current status
+## 2026-04-05 13:25
+### Shipped
+- Prerender now skips API fetch when `VITE_API_URL` is unset or local in CI.
+- Added fallback to static routes when API is unavailable.
+- Documented prerender env toggles in `README.md`.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- `npm run build` completes without backend API connectivity when `PRERENDER_SKIP_API=true`.
+
+### Not implemented yet
+- Issue auto-posting in test runner (requires token + wiring).
+- Dated test-plan generation output (no plan file generated yet).
+
+### Risks / blockers
+- `VITE_API_URL` must be set for CI prerender to reach backend and build dynamic routes.
+- Playwright browsers must be installed before E2E runs.
+
 ## 2026-04-05 13:21
 ### Shipped
 - Added `av-foundation-frontend-web/README.md` documenting skills-first philosophy and project context.
