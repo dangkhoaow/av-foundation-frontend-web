@@ -23,7 +23,8 @@ export const env = {
 
   // API Configuration (Vite uses VITE_*)
   apiUrl: (metaEnv.VITE_API_URL as string) || 'http://localhost:3001',
-  apiTimeout: parseInt((metaEnv.VITE_API_TIMEOUT as string) || '10000', 10),
+  // Artwork detail payloads can take longer than the old 10s default.
+  apiTimeout: parseInt((metaEnv.VITE_API_TIMEOUT as string) || '30000', 10),
 
   // Image base URL (same as API URL for this project)
   imageBaseUrl: (metaEnv.VITE_IMAGE_BASE_URL as string) || 'http://localhost:3001/',

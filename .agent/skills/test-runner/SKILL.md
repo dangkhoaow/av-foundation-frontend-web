@@ -11,22 +11,47 @@ metadata:
 ## Inputs
 - Latest test plan from `test-testing-plan`.
 - GH Pages URL: `https://dangkhoaow.github.io/av-foundation-frontend-web/`.
-- Optional reference URL: `https://d3te863nebxng5.cloudfront.net/`.
+- Optional baseline URL: `http://av-foundation-frontend-uat.us-east-1.elasticbeanstalk.com/`.
+
+## Visual baseline + diff flow
+- When `VISUAL_ENABLED=true`, the runner:
+  1. Generates a route manifest from the public APIs.
+  2. Runs `@visual` tests against the baseline URL and writes screenshots into `.agent/skills/test-runner/visual/<timestamp>/baseline/`.
+  3. Runs the same `@visual` tests against GH Pages and stores diffs in `.agent/skills/test-runner/visual/<timestamp>/compare/`.
+  4. Runs the non-visual functional E2E pass against GH Pages.
+- The visual spec reads `VISUAL_MANIFEST_PATH` and compares desktop + mobile projects.
+- Common env vars:
+  - `VISUAL_ENABLED`
+  - `BASELINE_BASE_URL`
+  - `E2E_BASE_URL`
+  - `VISUAL_API_URL`
+  - `VISUAL_LOCALES`
+  - `VISUAL_MAX_ARTISTS`
+  - `VISUAL_MAX_ARTWORKS`
+  - `VISUAL_MAX_EVENTS`
+  - `VISUAL_MAX_NEWS`
+  - `VISUAL_MAX_DIFF_PIXEL_RATIO`
+  - `VISUAL_MANIFEST_PATH`
+  - `VISUAL_SNAPSHOT_DIR`
+  - `PLAYWRIGHT_OUTPUT_DIR`
+  - `PLAYWRIGHT_JSON_OUTPUT`
+  - `PLAYWRIGHT_HTML_OUTPUT`
 
 ## Execution steps
 1. Read the latest plan file under:
    - `.agent/skills/test-testing-plan/plans/test-plan-yyyymmdd-hhmm.md`
-2. Run Playwright tests against GH Pages URL.
-3. Capture:
+2. If visual mode is enabled, generate the manifest and run the baseline visual pass first.
+3. Run the compare visual pass against GH Pages.
+4. Run the functional E2E pass against GH Pages.
+5. Capture:
    - Browser console logs
    - Network requests/responses to `/api/public/*`
    - Screenshots + traces
-4. (Optional) Run the same scenarios against the reference URL and capture diffs.
-5. Write a dated run report:
+6. Write a dated run report:
    - `.agent/skills/test-runner/runs/test-run-yyyymmdd-hhmm.md`
-6. Write a dated issue list:
+7. Write a dated issue list:
    - `.agent/skills/test-runner/issues/issues-yyyymmdd-hhmm.md`
-7. File or update GitHub issues:
+8. File or update GitHub issues:
    - CI: use GitHub API or `gh` with `GITHUB_TOKEN`
    - Cursor run: use GitHub MCP (`user-github`)
 
@@ -36,13 +61,19 @@ metadata:
 ## Plan used
 - test-plan-yyyymmdd-hhmm.md
 
+## Configuration
+- Baseline URL: ...
+- Compare URL: ...
+- Visual manifest: ...
+
 ## Results
-- TC-01: PASS
-- TC-02: FAIL (see issue #12)
+- Visual baseline: PASS
+- Visual compare: FAIL (see issue #12)
+- Functional E2E: PASS
 
 ## Evidence
-- traces/...
-- screenshots/...
+- visual/<timestamp>/baseline/...
+- visual/<timestamp>/compare/...
 - console logs attached
 ```
 

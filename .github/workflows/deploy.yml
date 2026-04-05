@@ -37,6 +37,7 @@ jobs:
         run: npm run build
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://d3te863nebxng5.cloudfront.net' }}
+          VITE_API_TIMEOUT: "30000"
           VITE_IMAGE_BASE_URL: ${{ secrets.VITE_IMAGE_BASE_URL || 'https://d3te863nebxng5.cloudfront.net' }}
           VITE_SITE_URL: https://dangkhoaow.github.io/av-foundation-frontend-web
           PRERENDER_MAX_ARTWORKS: 500
@@ -102,7 +103,11 @@ jobs:
       - name: Run E2E test runner
         run: npm run test:runner
         env:
+          BASELINE_BASE_URL: http://av-foundation-frontend-uat.us-east-1.elasticbeanstalk.com/
           E2E_BASE_URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+          VISUAL_ENABLED: "true"
+          VISUAL_API_URL: ${{ secrets.VITE_API_URL || 'https://d3te863nebxng5.cloudfront.net' }}
+          VISUAL_MAX_DIFF_PIXEL_RATIO: "0.02"
           ISSUES_ENABLED: "true"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -116,3 +121,4 @@ jobs:
             .agent/skills/test-testing-plan/plans
             .agent/skills/test-runner/runs
             .agent/skills/test-runner/issues
+            .agent/skills/test-runner/visual

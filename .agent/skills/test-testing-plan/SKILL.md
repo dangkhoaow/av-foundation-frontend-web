@@ -30,6 +30,10 @@ metadata:
   - Expected result
   - Evidence to capture (screenshot/trace/log)
 
+## Visual parity
+- If the plan includes cross-site visual verification, add a visual parity note that references the `test-runner` baseline/diff flow.
+- For visual parity coverage, prefer `vi` and `en` plus desktop and mobile projects so the runner can compare the old site against GH Pages consistently.
+
 ## Output format (example)
 ```
 # Test Plan YYYY-MM-DD HH:MM
