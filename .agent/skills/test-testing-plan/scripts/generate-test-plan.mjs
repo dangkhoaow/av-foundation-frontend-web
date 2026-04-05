@@ -5,7 +5,8 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..', '..', '..', '..');
 
-const planPath = '/Users/ktran/.cursor/plans/gh_pages_frontend_migration_9351a008.plan.md';
+const defaultPlanPath = path.join(repoRoot, 'plans', 'gh_pages_frontend_migration_9351a008.plan.md');
+const planPath = process.env.EPIC_PLAN_PATH || defaultPlanPath;
 const productMilestonesPath = path.join(
   repoRoot,
   '.agent',

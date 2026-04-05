@@ -9,8 +9,9 @@
 
 import { useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
 import { Icon } from '../../atoms/Icon';
-import { useAppStore } from '@/store/useAppStore';
 import './MobileMenu.css';
 
 export interface NavItem {
@@ -46,7 +47,9 @@ export function MobileMenu({
   navItems,
   currentPath,
 }: MobileMenuProps) {
-  const { language, setLanguage } = useAppStore();
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
   
   // Close on ESC key
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -74,7 +77,11 @@ export function MobileMenu({
   };
 
   const toggleLanguage = () => {
-    setLanguage(language === 'vi' ? 'en' : 'vi');
+    const newLocale = locale === 'vi' ? 'en' : 'vi';
+    const pathWithoutLocale = pathname.replace(`/${locale}`, '') || '';
+    const newPath = `/${newLocale}${pathWithoutLocale}`;
+    onClose();
+    router.push(newPath);
   };
 
   if (!isOpen) return null;
@@ -117,7 +124,7 @@ export function MobileMenu({
             onClick={toggleLanguage}
           >
             <span className="ds-mobile-menu__language-text">
-              {language === 'vi' ? 'Vietnamese' : 'English'}
+              {locale === 'vi' ? 'Vietnamese' : 'English'}
             </span>
           </button>
         </div>

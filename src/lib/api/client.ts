@@ -19,9 +19,7 @@ export class ApiClient {
   constructor(baseURL: string = env.apiUrl, timeout: number = env.apiTimeout, locale?: string) {
     this.baseURL = baseURL;
     this.timeout = timeout;
-    this.headers = {
-      'Content-Type': 'application/json',
-    };
+    this.headers = {};
     
     // Set locale header if provided
     if (locale) {
@@ -102,6 +100,10 @@ export class ApiClient {
     return this.request<T>(endpoint, {
       ...options,
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options?.headers || {}),
+      },
       body: JSON.stringify(data),
     });
   }
@@ -110,6 +112,10 @@ export class ApiClient {
     return this.request<T>(endpoint, {
       ...options,
       method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options?.headers || {}),
+      },
       body: JSON.stringify(data),
     });
   }
@@ -118,6 +124,10 @@ export class ApiClient {
     return this.request<T>(endpoint, {
       ...options,
       method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(options?.headers || {}),
+      },
       body: JSON.stringify(data),
     });
   }

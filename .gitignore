@@ -8,3 +8,4 @@ coverage
 .agent/skills/test-runner/issues
 playwright-report
 test-results
+.agent/skills/test-runner/visual/*

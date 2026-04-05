@@ -31,7 +31,15 @@ test('homepage loads with locale routing', async ({ page }) => {
 
 test('language toggle switches locale', async ({ page }) => {
   await page.goto(buildUrl('/vi'));
-  await page.locator('.sidebar__language').click();
+  const sidebarToggle = page.locator('.sidebar__language');
+  if (await sidebarToggle.isVisible().catch(() => false)) {
+    await sidebarToggle.click();
+  } else {
+    await page.getByRole('button', { name: 'Open menu' }).click();
+    const mobileToggle = page.locator('.ds-mobile-menu__language');
+    await expect(mobileToggle).toBeVisible({ timeout: 10_000 });
+    await mobileToggle.click();
+  }
 
   await expect(page).toHaveURL(toPathRegex('/en'));
 });
