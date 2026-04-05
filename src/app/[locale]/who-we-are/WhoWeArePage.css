@@ -1,0 +1,87 @@
+/* Who We Are Page Styles */
+/* Following Collection Page pattern - using design system variables */
+
+/* ==================== BASE STYLES (Mobile First) ==================== */
+.who-we-are-page {
+  min-height: 100vh;
+  background: var(--color-bg-main);
+}
+
+.who-we-are-container {
+  /* No max-width or margin auto - let content flow naturally with sidebar */
+  padding: 100px var(--container-padding-right) 80px var(--container-padding-left);
+}
+
+.who-we-are-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-display-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-burgundy);
+  margin: 0 0 var(--spacing-16) 0;
+}
+
+.who-we-are-hero {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-16);
+  background: var(--color-beige-dark);
+}
+
+.who-we-are-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.who-we-are-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.who-we-are-section h2 {
+  font-family: var(--font-body);
+  font-size: 28px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-burgundy);
+  margin: 0 0 var(--spacing-5) 0;
+}
+
+.who-we-are-section p {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  line-height: 1.8;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* ==================== TABLET (768px+) ==================== */
+@media (min-width: 768px) {
+  .who-we-are-container {
+    padding: 120px var(--spacing-10) 100px var(--spacing-10);
+  }
+
+  .who-we-are-title {
+    font-size: var(--text-display-lg);
+  }
+
+  .who-we-are-hero {
+    height: 500px;
+  }
+}
+
+/* ==================== DESKTOP (1024px+) ==================== */
+@media (min-width: 1024px) {
+  .who-we-are-container {
+    padding: 140px var(--container-padding-right) 120px var(--container-padding-left);
+  }
+
+  .who-we-are-title {
+    font-size: var(--text-display-xl);
+  }
+
+  .who-we-are-hero {
+    height: 600px;
+  }
+}

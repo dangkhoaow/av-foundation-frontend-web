@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "next/link": ["src/routing/next-link.tsx"],
+      "next/navigation": ["src/routing/next-navigation.ts"],
+      "next/image": ["src/routing/next-image.tsx"],
+      "next/font/google": ["src/routing/next-font-google.ts"],
+      "next-intl": ["src/i18n/next-intl.ts"],
+      "next-intl/server": ["src/i18n/next-intl-server.ts"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
+}

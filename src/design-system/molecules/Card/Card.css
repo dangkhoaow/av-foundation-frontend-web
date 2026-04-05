@@ -1,0 +1,128 @@
+/**
+ * Molecule Component - Card Styles
+ */
+
+.ds-card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Remove button default styles when card is clickable */
+.ds-card--clickable {
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+/* Variants */
+.ds-card--default {
+  background-color: white;
+}
+
+.ds-card--outlined {
+  background-color: transparent;
+  border: 1px solid var(--color-border-primary);
+}
+
+.ds-card--elevated {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ds-card--elevated:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.ds-card--museum {
+  background-color: var(--color-background-secondary);
+  border-bottom: 1px solid var(--color-primary);
+}
+
+/* Padding */
+.ds-card--padding-none {
+  padding: 0;
+}
+
+.ds-card--padding-sm {
+  padding: 16px;
+}
+
+.ds-card--padding-md {
+  padding: 24px;
+}
+
+.ds-card--padding-lg {
+  padding: 32px;
+}
+
+/* Hoverable */
+.ds-card--hoverable {
+  cursor: pointer;
+}
+
+.ds-card--hoverable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.ds-card--clickable:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Sub-components */
+.ds-card__header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border-primary);
+  margin-bottom: 16px;
+}
+
+.ds-card__body {
+  flex: 1;
+}
+
+.ds-card__footer {
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-primary);
+  margin-top: 16px;
+}
+
+/* Image */
+.ds-card__image-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-background-secondary);
+}
+
+.ds-card__image--16\/9 {
+  aspect-ratio: 16 / 9;
+}
+
+.ds-card__image--4\/3 {
+  aspect-ratio: 4 / 3;
+}
+
+.ds-card__image--1\/1 {
+  aspect-ratio: 1 / 1;
+}
+
+.ds-card__image--auto {
+  aspect-ratio: auto;
+}
+
+.ds-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.ds-card--hoverable:hover .ds-card__image,
+.ds-card--clickable:hover .ds-card__image {
+  transform: scale(1.05);
+}

@@ -1,0 +1,215 @@
+/**
+ * FeaturedArtworks Component Styles
+ * Grid layout for featured artworks on homepage
+ */
+
+.featured-artworks {
+  padding: var(--spacing-section-vertical, 80px) 0;
+  background-color: var(--color-background, #f9f7f4);
+}
+
+.featured-artworks__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-lg, 48px);
+  border-bottom: 1px solid var(--color-border, #e0e0e0);
+  padding-bottom: var(--spacing-md, 24px);
+}
+
+.featured-artworks__view-all {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: var(--font-size-sm, 0.875rem);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary, #666);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.featured-artworks__view-all::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.featured-artworks__view-all:hover {
+  color: var(--color-text-primary, #1a1a1a);
+}
+
+.featured-artworks__view-all:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.featured-artworks__title {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-size: var(--font-size-h2, 2.5rem);
+  font-weight: 500;
+  color: var(--color-text-primary, #1a1a1a);
+  margin: 0;
+}
+
+.featured-artworks__error {
+  text-align: center;
+  padding: var(--spacing-lg, 48px);
+  color: var(--color-text-secondary, #666);
+}
+
+/* Grid Layout */
+.featured-artworks__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md, 24px);
+}
+
+@media (max-width: 1024px) {
+  .featured-artworks__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-artworks__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm, 16px);
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-artworks__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Grid Item */
+.featured-artworks__item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.featured-artworks__item:hover {
+  transform: translateY(-4px);
+}
+
+/* Image Wrapper */
+.featured-artworks__image-wrapper {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--border-radius-md, 8px);
+  background-color: var(--color-background-secondary, #e8e4dc);
+}
+
+.featured-artworks__image {
+  transition: transform 0.5s ease;
+}
+
+.featured-artworks__item:hover .featured-artworks__image {
+  transform: scale(1.05);
+}
+
+.featured-artworks__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary, #999);
+  font-size: var(--font-size-sm, 0.875rem);
+}
+
+/* Hover Overlay */
+.featured-artworks__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    transparent 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: var(--spacing-md, 24px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.featured-artworks__overlay--visible {
+  opacity: 1;
+}
+
+.featured-artworks__view-text {
+  color: white;
+  font-size: var(--font-size-sm, 0.875rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--spacing-xs, 8px) var(--spacing-sm, 16px);
+  border: 1px solid white;
+  border-radius: var(--border-radius-sm, 4px);
+  transition: background-color 0.3s ease;
+}
+
+.featured-artworks__view-text:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Info Section */
+.featured-artworks__info {
+  padding: var(--spacing-sm, 16px) 0;
+}
+
+.featured-artworks__artwork-title {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-size: var(--font-size-lg, 1.125rem);
+  font-weight: 500;
+  color: var(--color-text-primary, #1a1a1a);
+  margin: 0 0 var(--spacing-xs, 8px);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.featured-artworks__artist {
+  font-size: var(--font-size-sm, 0.875rem);
+  color: var(--color-text-secondary, #666);
+  margin: 0 0 var(--spacing-2xs, 4px);
+}
+
+.featured-artworks__date {
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--color-text-tertiary, #999);
+  margin: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .featured-artworks {
+    padding: var(--spacing-section-vertical-mobile, 48px) 0;
+  }
+
+  .featured-artworks__title {
+    font-size: var(--font-size-h2-mobile, 1.75rem);
+  }
+
+  .featured-artworks__header {
+    margin-bottom: var(--spacing-md, 24px);
+  }
+}
+

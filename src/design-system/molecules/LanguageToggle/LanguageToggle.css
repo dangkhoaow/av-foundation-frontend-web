@@ -1,0 +1,46 @@
+/**
+ * Molecule Component - LanguageToggle Styles
+ */
+
+.ds-language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-medium);
+}
+
+.ds-language-toggle__option {
+  background: none;
+  border: none;
+  padding: var(--spacing-2);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: color var(--transition-normal);
+  position: relative;
+}
+
+.ds-language-toggle__option:hover {
+  color: var(--color-burgundy);
+}
+
+.ds-language-toggle__option--active {
+  color: var(--color-burgundy);
+  font-weight: var(--font-weight-semibold);
+}
+
+.ds-language-toggle__option:focus-visible {
+  outline: 2px solid var(--color-burgundy);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.ds-language-toggle__divider {
+  color: var(--color-text-primary);
+  user-select: none;
+}
+

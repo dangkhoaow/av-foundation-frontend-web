@@ -1,0 +1,63 @@
+/**
+ * ScrollToTop Component Styles
+ * Floating button to scroll back to top
+ * Using design system tokens
+ */
+
+.scroll-to-top {
+  position: fixed;
+  bottom: var(--spacing-10); /* 40px */
+  right: 80px;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(31.5px);
+  -webkit-backdrop-filter: blur(31.5px);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  transition: all var(--transition-normal);
+  z-index: 999;
+  box-shadow: var(--shadow-md);
+}
+
+.scroll-to-top:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.05);
+}
+
+.scroll-to-top:active {
+  transform: scale(0.95);
+}
+
+.scroll-to-top svg {
+  width: var(--spacing-6); /* 24px */
+  height: var(--spacing-6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .scroll-to-top {
+    right: var(--spacing-10); /* 40px */
+    bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-to-top {
+    right: var(--spacing-5); /* 20px */
+    bottom: var(--spacing-5);
+    width: 44px;
+    height: 44px;
+  }
+  
+  .scroll-to-top svg {
+    width: var(--spacing-5); /* 20px */
+    height: var(--spacing-5);
+  }
+}
+

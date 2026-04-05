@@ -1,0 +1,214 @@
+/**
+ * Organism Component - Mobile Menu Styles
+ * Full-screen overlay with centered navigation
+ * Design: Burgundy background with blur effect
+ */
+
+/* ==================== BASE STYLES ==================== */
+.ds-mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+/* ===== Full Screen Overlay ===== */
+.ds-mobile-menu__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(112, 31, 39, 0.8); /* Burgundy from Figma */
+  backdrop-filter: blur(17.9px);
+  -webkit-backdrop-filter: blur(17.9px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ds-mobile-menu-fade-in 0.3s ease-out;
+}
+
+/* ===== Close Button - Top Right ===== */
+.ds-mobile-menu__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1); /* Figma spec */
+  backdrop-filter: blur(31.5px);
+  -webkit-backdrop-filter: blur(31.5px);
+  border: none;
+  border-radius: 25px;
+  color: #f2efe7; /* White from Figma */
+  cursor: pointer;
+  transition: background var(--transition-normal);
+  z-index: 10;
+}
+
+.ds-mobile-menu__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ds-mobile-menu__close:focus-visible {
+  outline: 2px solid #f2efe7;
+  outline-offset: 2px;
+}
+
+/* ===== Content - Centered ===== */
+.ds-mobile-menu__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px; /* Figma spec */
+  animation: ds-mobile-menu-scale-in 0.3s ease-out;
+}
+
+/* ===== Navigation ===== */
+.ds-mobile-menu__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0; /* Items are tightly packed */
+}
+
+.ds-mobile-menu__nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 58px; /* Figma spec */
+  padding: 10px;
+  text-decoration: none;
+  color: #f2efe7; /* White from Figma */
+  position: relative;
+  transition: color var(--transition-normal);
+  cursor: pointer;
+}
+
+.ds-mobile-menu__nav-item:hover {
+  color: #c8932c; /* Gold accent */
+}
+
+.ds-mobile-menu__nav-item:focus-visible {
+  outline: 2px solid #f2efe7;
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.ds-mobile-menu__nav-text {
+  font-family: var(--font-body);
+  font-size: 16px; /* Figma spec */
+  font-weight: var(--font-weight-regular);
+  line-height: normal;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+/* Active state */
+.ds-mobile-menu__nav-item--active .ds-mobile-menu__nav-text {
+  font-weight: var(--font-weight-bold);
+  color: #c8932c; /* Gold accent from Figma */
+}
+
+/* Underline indicator */
+.ds-mobile-menu__nav-underline {
+  position: absolute;
+  bottom: 10px; /* Figma spec */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px; /* Default width */
+  height: 4px; /* Figma spec */
+  background: #732231; /* Dark burgundy */
+  border-radius: 6px; /* Figma spec */
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* Active state: show underline with 70px width and gold color */
+.ds-mobile-menu__nav-item--active .ds-mobile-menu__nav-underline {
+  opacity: 1;
+  width: 70px; /* Figma active state width */
+  background: #c8932c; /* Gold accent */
+}
+
+/* Hover state: show underline */
+.ds-mobile-menu__nav-item:hover .ds-mobile-menu__nav-underline {
+  opacity: 1;
+}
+
+/* ===== Language Toggle ===== */
+.ds-mobile-menu__language {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 58px; /* Match nav item height */
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-top: 1px solid #f2efe7; /* Top border from Figma */
+  color: #f2efe7;
+  cursor: pointer;
+  transition: color var(--transition-normal);
+  min-width: 150px;
+}
+
+.ds-mobile-menu__language:hover {
+  color: #c8932c;
+}
+
+.ds-mobile-menu__language:focus-visible {
+  outline: 2px solid #f2efe7;
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.ds-mobile-menu__language-text {
+  font-family: var(--font-body);
+  font-size: 16px; /* Figma spec */
+  font-weight: var(--font-weight-regular);
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes ds-mobile-menu-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ds-mobile-menu-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ==================== ACCESSIBILITY ==================== */
+@media (prefers-reduced-motion: reduce) {
+  .ds-mobile-menu__overlay,
+  .ds-mobile-menu__content {
+    animation: none;
+  }
+  
+  .ds-mobile-menu__nav-item,
+  .ds-mobile-menu__nav-underline,
+  .ds-mobile-menu__close,
+  .ds-mobile-menu__language {
+    transition: none;
+  }
+}
+
+/* ==================== TABLET+ (768px+) - Hide mobile menu ==================== */
+@media (min-width: 768px) {
+  .ds-mobile-menu {
+    display: none;
+  }
+}

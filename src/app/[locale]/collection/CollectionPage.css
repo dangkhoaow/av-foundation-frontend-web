@@ -1,0 +1,713 @@
+/* Collection Page Styles */
+
+/* ==================== BASE STYLES (Mobile First) ==================== */
+.collection-page {
+  min-height: 100vh;
+  background: var(--color-bg-main);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hero Section */
+.collection-page__hero {
+  padding: 100px var(--spacing-4) 30px var(--spacing-4);
+  background: var(--color-bg-main);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.collection-page__hero-content {
+  max-width: 100%;
+}
+
+.collection-page__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-display-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  color: var(--color-burgundy);
+  margin: 0;
+}
+
+.collection-page__featured {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Figma: gap-[25px] */
+  margin-top: 50px; /* Figma: py-[50px] - space after title */
+}
+
+.collection-page__section-title {
+  font-family: var(--font-body);
+  font-size: var(--text-h6);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--color-burgundy);
+  margin: 0;
+}
+
+/* Content Section */
+.collection-page__content {
+  padding: 40px var(--spacing-4) 80px var(--spacing-4);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.collection-page__filters {
+  margin-bottom: var(--spacing-10);
+}
+
+.collection-page__filter-tabs {
+  display: flex;
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-6);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.collection-page__filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-tab {
+  padding: 10px 20px;
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  background: var(--color-beige-light);
+  border-color: var(--color-burgundy);
+}
+
+.filter-tab--active {
+  background: var(--color-burgundy);
+  border-color: var(--color-burgundy);
+  color: var(--color-text-inverse);
+}
+
+/* CSS Grid Masonry Layout with Row Spans */
+.collection-page__grid {
+  display: grid;
+  grid-template-columns: var(--grid-column-width, 1fr);      /* 1 column on mobile, JS sets --grid-column-width */
+  grid-auto-rows: 10px;            /* Small row units for precise control */
+  column-gap: var(--spacing-6);    /* Gap between columns only */
+  row-gap: 0;                      /* NO gap between rows (they're tiny!) */
+  margin-bottom: var(--spacing-10);
+}
+
+.artwork-card-grid {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  cursor: pointer;
+  display: block;
+  padding-bottom: var(--spacing-6); /* Spacing as padding instead of margin */
+  /* grid-row-end will be set inline via style */
+  /* transition handled inline for opacity + transform */
+}
+
+/* Removed lift up effect on hover */
+
+.artwork-card-grid__image {
+  width: 100%;
+  height: auto;
+  line-height: 0;
+  position: relative;
+  overflow: hidden;
+  /* Match skeleton color for seamless transition */
+  background: linear-gradient(135deg, #F5F2EE 0%, #EBE5DD 100%);
+}
+
+.artwork-card-grid__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Smooth fade when image loads (opacity handled in parent) */
+.artwork-card-grid__image img.loaded {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Remove background when loaded */
+.artwork-card-grid__image:has(img.loaded) {
+  background: transparent;
+}
+
+.artwork-card-grid__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 20px 24px;
+}
+
+.artwork-card-grid__info {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.artwork-card-grid__artist {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.artwork-card-grid__artist img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artwork-card-grid__artist-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--color-burgundy) 0%, #8B3A42 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-inverse);
+}
+
+.artwork-card-grid__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 2;
+  padding-bottom: 6px;
+}
+
+.artwork-card-grid__artist-name {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-inverse);
+}
+
+.artwork-card-grid__artwork-count {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-inverse);
+}
+
+/* Load More Button */
+.collection-page__load-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==================== SKELETON LOADING ==================== */
+.skeleton-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+/* Shimmer animation - modern loading effect */
+.skeleton-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Featured Section Skeleton - matches ArtistCollectionCard layout */
+.skeleton-featured {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.skeleton-featured__info {
+  flex: 1;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  background: linear-gradient(135deg, #F2EFE8 0%, #E8E3D8 100%);
+  padding: var(--spacing-8) var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-featured__info::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+.skeleton-featured__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-full);
+  background: rgba(107, 33, 40, 0.08);
+}
+
+.skeleton-featured__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.skeleton-featured__line {
+  height: 14px;
+  border-radius: var(--radius-xs);
+  background: rgba(107, 33, 40, 0.08);
+}
+
+.skeleton-featured__line--short {
+  width: 60%;
+}
+
+.skeleton-featured__line--medium {
+  width: 80%;
+}
+
+.skeleton-featured__line--long {
+  width: 100%;
+}
+
+.skeleton-featured__gallery {
+  flex: 1;
+  width: 100%;
+  height: 400px;
+  min-height: 400px;
+  background: linear-gradient(135deg, #F0EDE6 0%, #E5E0D5 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-featured__gallery::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+/* Grid Skeleton Item - with random-like heights for masonry effect */
+.skeleton-grid-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  padding-bottom: var(--spacing-6);
+}
+
+.skeleton-grid-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* Stagger shimmer animation for each skeleton item */
+.skeleton-grid-item:nth-child(1)::after { animation-delay: 0s; }
+.skeleton-grid-item:nth-child(2)::after { animation-delay: 0.1s; }
+.skeleton-grid-item:nth-child(3)::after { animation-delay: 0.2s; }
+.skeleton-grid-item:nth-child(4)::after { animation-delay: 0.3s; }
+.skeleton-grid-item:nth-child(5)::after { animation-delay: 0.4s; }
+.skeleton-grid-item:nth-child(6)::after { animation-delay: 0.5s; }
+.skeleton-grid-item:nth-child(7)::after { animation-delay: 0.6s; }
+.skeleton-grid-item:nth-child(8)::after { animation-delay: 0.7s; }
+.skeleton-grid-item:nth-child(9)::after { animation-delay: 0.8s; }
+.skeleton-grid-item:nth-child(10)::after { animation-delay: 0.9s; }
+
+/* Smooth fade-in when image loads */
+.artwork-card-grid__image img {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.artwork-card-grid__image img.loaded {
+  opacity: 1;
+}
+
+/* Instant display for images that were already loaded (on back navigation) */
+.artwork-card-grid__image img.instant {
+  opacity: 1;
+  transition: none;
+  animation: none;
+}
+
+/* Featured skeleton responsive */
+@media (min-width: 768px) {
+  .skeleton-featured {
+    flex-direction: row;
+    gap: var(--spacing-5);
+    min-height: 500px;
+  }
+
+  .skeleton-featured__info {
+    flex: 0 0 220px;
+    width: 220px;
+    min-height: 500px;
+  }
+
+  .skeleton-featured__gallery {
+    width: calc(100% - 240px);
+    height: 500px;
+    min-height: 500px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .skeleton-featured {
+    min-height: 644px;
+  }
+
+  .skeleton-featured__info {
+    flex: 0 0 250px;
+    width: 250px;
+  }
+
+  .skeleton-featured__gallery {
+    width: calc(100% - 270px);
+    min-height: 500px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .skeleton-featured {
+    width: 100%;
+    height: 644px;
+  }
+
+  .skeleton-featured__info {
+    flex: 0 0 276px;
+    width: 276px;
+    height: 644px;
+  }
+
+  .skeleton-featured__gallery {
+    flex: 1;
+    width: auto;
+    height: 644px;
+    min-height: 644px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .skeleton-featured {
+    width: 100%;
+    height: 720px;
+  }
+
+  .skeleton-featured__info {
+    flex: 0 0 320px;
+    width: 320px;
+    height: 720px;
+  }
+
+  .skeleton-featured__gallery {
+    flex: 1;
+    width: auto;
+    height: 720px;
+    min-height: 720px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .skeleton-featured {
+    width: 100%;
+    height: 800px;
+  }
+
+  .skeleton-featured__info {
+    flex: 0 0 380px;
+    width: 380px;
+    height: 800px;
+  }
+
+  .skeleton-featured__gallery {
+    flex: 1;
+    width: auto;
+    height: 800px;
+    min-height: 800px;
+  }
+}
+
+/* ==================== TABLET (768px+) ==================== */
+@media (min-width: 768px) {
+  .collection-page__hero {
+    padding: 100px var(--spacing-10) 30px var(--spacing-10);
+  }
+  
+  .collection-page__content {
+    padding: 40px var(--spacing-10) 80px var(--spacing-10);
+  }
+  
+  .collection-page__title {
+    font-size: var(--text-display-md);
+  }
+  
+  .collection-page__section-title {
+    font-size: var(--text-h5);
+  }
+  
+  .collection-page__filter-tabs {
+    overflow-x: visible;
+  }
+  
+  .filter-tab {
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--text-body-md);
+  }
+  
+  .collection-page__grid {
+    grid-template-columns: repeat(2, var(--grid-column-width, 1fr));
+  }
+
+  /* Artwork card overlay - tablet */
+  .artwork-card-grid__info {
+    gap: 32px;
+  }
+
+  .artwork-card-grid__artist {
+    width: 71px;
+    height: 71px;
+  }
+
+  .artwork-card-grid__artist-placeholder {
+    font-size: 24px;
+  }
+
+  .artwork-card-grid__artist-name {
+    font-size: 20px;
+  }
+}
+
+/* ==================== DESKTOP (1024px+) ==================== */
+@media (min-width: 1024px) {
+  .collection-page__hero {
+    padding-top: 120px;
+    padding-right: var(--container-padding-right);
+    padding-bottom: 40px;
+    padding-left: var(--container-padding-left);
+  }
+  
+  .collection-page__content {
+    padding-top: 60px;
+    padding-right: var(--container-padding-right);
+    padding-bottom: 100px;
+    padding-left: var(--container-padding-left);
+  }
+  
+  .collection-page__title {
+    font-size: var(--text-display-lg);
+  }
+  
+  .collection-page__featured {
+    gap: var(--spacing-10);
+  }
+  
+  .collection-page__grid {
+    grid-template-columns: repeat(2, var(--grid-column-width, 1fr));
+  }
+}
+
+/* ==================== WIDE (1440px+) ==================== */
+@media (min-width: 1440px) {
+  .collection-page__hero {
+    padding-top: 140px;
+    padding-right: var(--container-padding-right);
+    padding-bottom: 60px;
+    padding-left: var(--container-padding-left);
+  }
+  
+  .collection-page__hero-content {
+    /* Bỏ max-width để chiều rộng bằng với content section phía dưới */
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .collection-page__title {
+    font-size: var(--text-display-xl); /* 80px - Figma spec */
+  }
+  
+  .collection-page__featured {
+    gap: 25px; /* Figma: gap-[25px] */
+    margin-top: 50px; /* Figma: py-[50px] */
+  }
+  
+  .collection-page__content {
+    padding-top: 80px;
+    padding-right: var(--container-padding-right);
+    padding-bottom: 120px;
+    padding-left: var(--container-padding-left);
+  }
+  
+  .collection-page__filters {
+    margin-bottom: var(--spacing-16);
+  }
+  
+  .collection-page__grid {
+    grid-template-columns: repeat(2, var(--grid-column-width, 1fr));
+    margin-bottom: var(--spacing-16);
+  }
+}
+
+/* ==================== ULTRA (1920px+) ==================== */
+@media (min-width: 1920px) {
+  .collection-page__hero {
+    padding-top: 160px;
+    padding-right: var(--container-padding-right);
+    padding-bottom: 80px;
+    padding-left: var(--container-padding-left);
+  }
+  
+  .collection-page__hero-content {
+    /* Bỏ max-width để chiều rộng bằng với content section phía dưới */
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .collection-page__title {
+    font-size: 90px;
+  }
+  
+  .collection-page__content {
+    padding-top: 100px;
+    padding-right: var(--container-padding-right);
+    padding-bottom: 140px;
+    padding-left: var(--container-padding-left);
+  }
+  
+  .collection-page__grid {
+    grid-template-columns: repeat(2, var(--grid-column-width, 1fr));
+  }
+}
+
+/* ==================== 2K+ (2560px+) ==================== */
+@media (min-width: 2560px) {
+  .collection-page__hero {
+    padding-top: 180px;
+    padding-right: var(--container-padding-right);
+    padding-bottom: 100px;
+    padding-left: var(--container-padding-left);
+  }
+  
+  .collection-page__hero-content {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .collection-page__title {
+    font-size: 110px;
+    margin-bottom: 60px;
+  }
+  
+  .collection-page__featured {
+    margin-top: var(--spacing-20);
+  }
+  
+  .collection-page__content {
+    padding-top: 120px;
+    padding-right: var(--container-padding-right);
+    padding-bottom: 160px;
+    padding-left: var(--container-padding-left);
+  }
+  
+  .collection-page__filters {
+    margin-bottom: var(--spacing-20);
+  }
+  
+  .collection-page__grid {
+    grid-template-columns: repeat(2, var(--grid-column-width, 1fr));
+    margin-bottom: var(--spacing-20);
+  }
+}

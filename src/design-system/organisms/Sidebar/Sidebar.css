@@ -1,0 +1,141 @@
+/**
+ * Organism Component - Sidebar Styles
+ * Fixed left navigation with scroll progress indicator
+ * Using design system tokens
+ */
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--layout-sidebar-width); /* 129px */
+  background: linear-gradient(90deg, var(--color-beige-light) 0%, var(--color-beige-light) 100%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 0 var(--spacing-10) 0;
+}
+
+.sidebar__content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar__top {
+  flex-shrink: 0;
+}
+
+.sidebar__logo {
+  display: block;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.sidebar__logo:hover {
+  opacity: 0.8;
+}
+
+.sidebar__logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sidebar__progress {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-16) 0; /* 60px */
+  min-height: 387px;
+}
+
+.sidebar__progress-track {
+  width: 3px;
+  height: 387px;
+  background: var(--color-beige-dark);
+  border-radius: 5px;
+  position: relative;
+}
+
+.sidebar__progress-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: var(--spacing-10); /* 40px */
+  background: var(--color-burgundy);
+  border-radius: 5px;
+  box-shadow: var(--shadow-sm);
+  will-change: transform;
+  /* Use transform with CSS variable for better performance */
+  /* Formula: (progress% * track_available_height) - half_indicator_height */
+  /* Available height = 387px - 40px = 347px */
+  transform: translateY(calc(var(--scroll-progress, 0) * 3.47px - 20px));
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar__bottom {
+  flex-shrink: 0;
+}
+
+.sidebar__language {
+  position: relative;
+  width: 63px;
+  height: var(--spacing-8); /* 32px */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 7px 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar__language-text {
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-loose);
+  color: var(--color-text-primary);
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.sidebar__language:hover .sidebar__language-text {
+  opacity: 0.7;
+}
+
+.sidebar__language-indicator {
+  position: absolute;
+  bottom: 7px;
+  left: 0;
+  width: 0;
+  height: var(--spacing-8); /* 32px */
+  pointer-events: none;
+}
+
+/* Hide sidebar on mobile and tablet */
+@media (max-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+/* Adjust main content margin when sidebar is visible */
+@media (min-width: 1025px) {
+  body {
+    padding-left: 0;
+  }
+}

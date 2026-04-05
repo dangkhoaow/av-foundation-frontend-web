@@ -1,0 +1,507 @@
+/**
+ * Organism Component - Footer Styles
+ * Mobile-First Responsive Pattern
+ * Using design system tokens
+ */
+
+/* ==================== BASE STYLES (Mobile First - 320px+) ==================== */
+.ds-footer {
+  position: relative;
+  background: rgba(200, 147, 44, 0.1); /* Beige/gold tint for all screen sizes */
+  padding: var(--spacing-8) var(--container-padding-right) var(--spacing-8) var(--container-padding-left); /* Using dynamic padding variables */
+  /*margin-top: var(--spacing-12); !* Smaller margin on mobile *!*/
+}
+
+.ds-footer__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-8); /* Smaller gap on mobile */
+}
+
+.ds-footer__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8); /* Smaller gap on mobile */
+}
+
+/* ===== Main Content ===== */
+.ds-footer__main {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  justify-content: space-between;
+  gap: var(--spacing-8);
+}
+
+.ds-footer__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4); /* Smaller gap on mobile */
+  max-width: none; /* Full width on mobile */
+}
+
+.ds-footer__title {
+  /* color: var(--color-text-primary); */
+  margin: 0;
+  font-size: var(--text-body-lg);
+}
+
+.ds-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.ds-footer__contact p {
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-size: var(--text-body-sm);
+}
+
+/* ===== Social Links ===== */
+.ds-footer__social {
+  display: flex;
+  gap: var(--spacing-3); /* Smaller gap on mobile */
+  margin-top: var(--spacing-3);
+  flex-wrap: wrap; /* Allow wrapping on mobile */
+}
+
+.ds-footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+}
+
+.ds-footer__social-link:hover {
+  background: var(--color-burgundy);
+  color: var(--color-text-inverse);
+  transform: translateY(-2px);
+}
+
+/* ===== Links Section ===== */
+.ds-footer__links {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  gap: var(--spacing-6);
+}
+
+.ds-footer__section {
+  display: flex;
+  flex-direction: column;
+  /*gap: var(--spacing-3); !* Smaller gap on mobile *!*/
+}
+
+.ds-footer__section-title {
+  color: var(--color-text-primary);
+  margin: 0;
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.ds-footer__section-content {
+  display: flex;
+  flex-direction: column;
+  /*gap: var(--spacing-2);*/
+}
+
+.ds-footer__link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-normal);
+  font-size: var(--text-body-sm);
+}
+
+.ds-footer__link:hover {
+  color: var(--color-burgundy);
+}
+
+.ds-footer__link p {
+  margin: 0;
+}
+
+/* ===== Bottom Section ===== */
+.ds-footer__bottom {
+  padding-top: var(--spacing-6); /* Smaller padding on mobile */
+  border-top: 1px solid var(--color-border-light);
+}
+
+.ds-footer__copyright {
+  color: var(--color-text-tertiary);
+  margin: 0;
+  font-size: var(--text-body-xs);
+}
+
+/* ===== Logo ===== */
+.ds-footer__logo {
+  flex-shrink: 0;
+  opacity: 0.1; /* Slightly more visible on mobile */
+  pointer-events: none;
+  align-self: center; /* Center on mobile */
+}
+
+.ds-footer__logo-img {
+  width: 120px; /* Smaller on mobile */
+  height: auto;
+  object-fit: contain;
+}
+
+/* ==================== TABLET (768px+) ==================== */
+@media (min-width: 768px) {
+  .ds-footer {
+    background: rgba(200, 147, 44, 0.1); /* Beige/gold tint */
+    padding: var(--spacing-12) var(--container-padding-right) var(--spacing-12) var(--container-padding-left); /* Using dynamic padding variables */
+    margin-top: 0; /* Consistent with other breakpoints */
+  }
+
+  .ds-footer__container {
+    gap: var(--spacing-8);
+  }
+
+  .ds-footer__content {
+    gap: var(--spacing-12);
+  }
+
+  .ds-footer__main {
+    gap: var(--spacing-8);
+  }
+
+  .ds-footer__info {
+    gap: var(--spacing-6);
+  }
+
+  .ds-footer__title {
+    font-size: var(--text-body-xl);
+  }
+
+  .ds-footer__contact p {
+    font-size: var(--text-body-md);
+  }
+
+  .ds-footer__social {
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+  }
+
+  .ds-footer__links {
+    gap: var(--spacing-8);
+  }
+
+  .ds-footer__section {
+    /*gap: var(--spacing-4);*/
+  }
+
+  .ds-footer__section-title {
+    font-size: var(--text-body-lg);
+  }
+
+  .ds-footer__link {
+    font-size: var(--text-body-md);
+  }
+
+  .ds-footer__bottom {
+    padding-top: var(--spacing-8);
+  }
+
+  .ds-footer__copyright {
+    font-size: var(--text-body-sm);
+  }
+
+  .ds-footer__logo-img {
+    width: 150px;
+  }
+}
+
+/* ==================== DESKTOP (1024px+) ==================== */
+@media (min-width: 1024px) {
+  .ds-footer {
+    background: rgba(200, 147, 44, 0.1); /* Beige/gold tint background */
+    padding: var(--spacing-16) var(--container-padding-right) var(--spacing-16) var(--container-padding-left); /* Using dynamic padding variables */
+    margin-top: 0; /* No margin-top */
+    position: relative; /* For absolute positioned logo */
+    overflow: hidden; /* Contain logo within footer bounds */
+  }
+
+  .ds-footer__container {
+    flex-direction: row; /* Side by side on desktop */
+    gap: var(--spacing-16);
+    position: relative;
+    z-index: 1; /* Above logo watermark */
+  }
+
+  .ds-footer__content {
+    gap: var(--spacing-12);
+  }
+
+  .ds-footer__main {
+    flex-direction: row; /* Side by side on desktop */
+    gap: var(--spacing-12);
+  }
+
+  .ds-footer__info {
+    max-width: 400px; /* Limit width on desktop */
+  }
+
+  .ds-footer__links {
+    flex-direction: row; /* Side by side on desktop */
+    gap: var(--spacing-12);
+  }
+
+  .ds-footer__logo {
+    flex: 0 0 auto; /* Don't shrink */
+    position: absolute; /* Position absolutely to edges */
+    right: 0; /* Flush to right edge */
+    top: 0; /* Flush to top edge */
+    bottom: 0; /* Flush to bottom edge */
+    opacity: 1; /* Make logo visible */
+    pointer-events: none;
+    z-index: 0; /* Behind content */
+  }
+
+  .ds-footer__logo-img {
+    width: auto;
+    height: 100%; /* Full height from top to bottom */
+    object-fit: contain;
+    display: block;
+  }
+}
+
+/* ==================== WIDE (1440px+) ==================== */
+@media (min-width: 1440px) {
+  .ds-footer {
+    background: rgba(200, 147, 44, 0.1); /* Figma: beige/gold tint */
+    padding: 0 0 0 var(--container-padding-left); /* Using dynamic padding variable */
+    min-height: 628px; /* Changed to min-height for flexibility */
+    position: relative;
+    overflow: hidden; /* Contain logo within footer bounds */
+    margin-top: 0px;
+  }
+
+  .ds-footer__container {
+    max-width: none; /* Full width with padding */
+    display: flex;
+    flex-direction: row; /* Horizontal: content left, logo right */
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px; /* Reduced gap for better spacing */
+    position: relative;
+    z-index: 1; /* Above watermark */
+    width: 100%;
+    padding: 36px var(--container-padding-right) 36px 0; /* Using dynamic padding variable for right */
+    min-height: 628px; /* Changed to min-height for flexibility */
+  }
+
+  .ds-footer__content {
+    flex: 1; /* Grow to fill container height */
+    max-width: 800px; /* Limit content width */
+    justify-content: space-between; /* Distribute children evenly */
+    position: relative;
+    z-index: 1; /* Above watermark */
+    height: 100%; /* Fill full container height for space-between to work */
+  }
+
+  .ds-footer__main {
+    flex-direction: column; /* Stack vertically */
+    gap: 56px; /* Figma: gap between info and links sections */
+  }
+
+  .ds-footer__info {
+    max-width: 737px; /* Figma spec */
+    gap: 13px; /* Figma: title to contact gap */
+  }
+
+  .ds-footer__links {
+    display: flex;
+    flex-direction: column; /* Stack links sections vertically */
+    gap: 21px; /* Figma: vertical gap between link sections */
+  }
+
+  .ds-footer__title {
+    font-family: 'Inter', sans-serif; /* Figma: Inter font */
+    font-size: 18px; /* Figma */
+    font-weight: 500;
+    line-height: 1.5;
+    color: #2E2E2E;
+  }
+
+  .ds-footer__contact {
+    gap: 0; /* Line-height handles spacing */
+    padding-bottom: 3px; /* Figma spec */
+  }
+
+  .ds-footer__contact p {
+    font-size: 16px; /* Figma */
+    line-height: 2; /* Figma */
+    color: #2E2E2E;
+  }
+
+  .ds-footer__email-link {
+    color: #2E2E2E;
+    text-decoration: underline;
+    text-underline-position: from-font;
+  }
+
+  .ds-footer__email-link:hover {
+    color: #6B2128;
+  }
+
+  .ds-footer__social {
+    gap: 24px; /* Figma spec */
+    margin-top: 0; /* Already handled by parent gap */
+  }
+
+  .ds-footer__social-link {
+    width: 16px;
+    height: 16px;
+    background: transparent; /* No background circle */
+    border-radius: 0;
+  }
+
+  .ds-footer__social-link:hover {
+    background: transparent;
+    opacity: 0.7;
+    transform: none;
+  }
+
+  .ds-footer__section {
+    /*gap: 21px; !* Figma: title to content gap *!*/
+  }
+
+  .ds-footer__section-title {
+    font-size: 18px; /* Figma */
+    font-weight: 500;
+    line-height: 1.5;
+    color: #2E2E2E;
+  }
+
+  .ds-footer__section-content {
+    gap: 0; /* Line-height handles spacing */
+    padding-bottom: 3px; /* Figma spec */
+  }
+
+  .ds-footer__link {
+    font-size: 16px; /* Figma */
+    line-height: 2;
+    color: #2E2E2E;
+    text-decoration: underline; /* Figma: all links underlined */
+    text-underline-position: from-font;
+    text-transform: lowercase; /* Figma: all lowercase */
+  }
+
+  .ds-footer__link:hover {
+    color: #6B2128;
+  }
+
+  .ds-footer__bottom {
+    border-top: none; /* No border in Figma */
+    padding-top: 0; /* Handled by parent gap */
+  }
+
+  .ds-footer__copyright {
+    font-size: 16px; /* Figma */
+    line-height: 2;
+    color: #2E2E2E;
+  }
+
+  .ds-footer__logo {
+    flex: 0 0 auto; /* Don't shrink */
+    position: absolute; /* Position absolutely to edges */
+    right: 0; /* Flush to right edge */
+    top: 0; /* Flush to top edge */
+    bottom: 0; /* Flush to bottom edge */
+    opacity: 1; /* User set to 1 for visibility */
+    pointer-events: none;
+    z-index: 0; /* Behind content */
+  }
+
+  .ds-footer__logo-img {
+    width: auto;
+    height: 100%; /* Full height from top to bottom */
+    object-fit: contain;
+    display: block;
+  }
+}
+
+/* ==================== ULTRA (1920px+) ==================== */
+@media (min-width: 1920px) {
+  .ds-footer {
+    background: rgba(200, 147, 44, 0.1); /* Beige/gold tint */
+    padding: 0 0 0 var(--container-padding-left); /* 131px at 1920px */
+  }
+
+  .ds-footer__container {
+    padding: 36px var(--container-padding-right) 36px 0; /* 131px right at 1920px */
+  }
+}
+
+/* ==================== EXTRA LARGE (2200px+) ==================== */
+@media (min-width: 2200px) {
+  .ds-footer {
+    background: rgba(200, 147, 44, 0.1); /* Beige/gold tint */
+    padding: 0 0 0 var(--container-padding-left); /* 171px at 2200px */
+  }
+
+  .ds-footer__container {
+    padding: 36px var(--container-padding-right) 36px 0; /* 171px right at 2200px */
+  }
+}
+
+/* ==================== SUPER LARGE (2560px+) - QHD/2K ==================== */
+@media (min-width: 2560px) {
+  .ds-footer {
+    background: rgba(200, 147, 44, 0.1); /* Beige/gold tint */
+    padding: 0 0 0 var(--container-padding-left); /* 220px at 2560px */
+  }
+
+  .ds-footer__container {
+    padding: 40px var(--container-padding-right) 40px 0; /* 220px right at 2560px */
+  }
+}
+
+/* ==================== ULTRA WIDE (3440px+) ==================== */
+@media (min-width: 3440px) {
+  .ds-footer {
+    background: rgba(200, 147, 44, 0.1); /* Beige/gold tint */
+    padding: 0 0 0 var(--container-padding-left); /* 300px at 3440px */
+  }
+
+  .ds-footer__container {
+    padding: 48px var(--container-padding-right) 48px 0; /* 300px right at 3440px */
+  }
+}
+
+/* ==================== 4K (3840px+) ==================== */
+@media (min-width: 3840px) {
+  .ds-footer {
+    background: rgba(200, 147, 44, 0.1); /* Beige/gold tint */
+    padding: 0 0 0 var(--container-padding-left); /* 350px at 3840px */
+  }
+
+  .ds-footer__container {
+    padding: 56px var(--container-padding-right) 56px 0; /* 350px right at 3840px */
+  }
+}
+
+/* ==================== SIDEBAR ADJUSTMENTS ==================== */
+/* When sidebar is present (1025px+), add padding to container for proper spacing */
+@media (min-width: 1025px) {
+  .app.with-sidebar .ds-footer {
+    padding-left: 0;
+  }
+  
+  /* Add padding to container so content has breathing room */
+  .app.with-sidebar .ds-footer__container {
+    padding-left: var(--container-padding-left);
+  }
+}
+

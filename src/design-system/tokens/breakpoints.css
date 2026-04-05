@@ -1,0 +1,123 @@
+/**
+ * Design System - Responsive Breakpoints (CSS Variables)
+ * Mobile-first approach
+ */
+
+:root {
+  /* ==================== BREAKPOINT VALUES ==================== */
+  --screen-xs: 320px;
+  --screen-sm: 480px;
+  --screen-md: 768px;
+  --screen-lg: 1024px;
+  --screen-xl: 1440px;
+  --screen-xxl: 1920px;
+
+  /* ==================== SEMANTIC BREAKPOINTS ==================== */
+  --screen-mobile-max: 767px;
+  --screen-tablet-min: 768px;
+  --screen-tablet-max: 1023px;
+  --screen-desktop-min: 1024px;
+  --screen-wide-min: 1440px;
+  --screen-ultra-min: 1920px;
+
+  /* ==================== CONTAINER WIDTHS ==================== */
+  --container-sm: 540px;
+  --container-md: 720px;
+  --container-lg: 960px;
+  --container-xl: 1200px;
+  --container-xxl: 1400px;
+
+  /* ==================== RESPONSIVE SPACING ==================== */
+  --spacing-responsive-xs: clamp(0.5rem, 1vw, 1rem);
+  --spacing-responsive-sm: clamp(1rem, 2vw, 2rem);
+  --spacing-responsive-md: clamp(2rem, 4vw, 4rem);
+  --spacing-responsive-lg: clamp(3rem, 6vw, 6rem);
+  --spacing-responsive-xl: clamp(4rem, 8vw, 8rem);
+
+  /* ==================== RESPONSIVE FONT SIZES ==================== */
+  --font-size-responsive-xs: clamp(0.75rem, 1vw, 0.875rem);
+  --font-size-responsive-sm: clamp(0.875rem, 1.5vw, 1rem);
+  --font-size-responsive-base: clamp(1rem, 2vw, 1.125rem);
+  --font-size-responsive-lg: clamp(1.125rem, 2.5vw, 1.5rem);
+  --font-size-responsive-xl: clamp(1.5rem, 3vw, 2rem);
+  --font-size-responsive-2xl: clamp(2rem, 4vw, 3rem);
+  --font-size-responsive-3xl: clamp(2.5rem, 5vw, 4rem);
+
+  /* ==================== CONTAINER PADDING (for alignment) ==================== */
+  /* Mobile first - default values */
+  --container-padding-left: 16px;   /* Mobile default */
+  --container-padding-right: 16px;  /* Mobile default */
+}
+
+/* ==================== TABLET (768px+) ==================== */
+@media (min-width: 768px) {
+  :root {
+    --container-padding-left: 20px;
+    --container-padding-right: 20px;
+  }
+}
+
+/* ==================== DESKTOP (1024px+) ==================== */
+@media (min-width: 1024px) {
+  :root {
+    --container-padding-left: 80px; /* ✅ Increased for better spacing */
+    --container-padding-right: 80px; /* ✅ Increased for better spacing */
+  }
+}
+
+/* ==================== WIDE (1440px+) ==================== */
+@media (min-width: 1440px) {
+  :root {
+    --container-padding-left: 188px;   /* Symmetric padding for wide screens */
+    --container-padding-right: 188px;  /* Symmetric padding for wide screens */
+  }
+}
+
+/* ==================== LARGE (1680px+) - Intermediate breakpoint ==================== */
+@media (min-width: 1680px) {
+  :root {
+    --container-padding-left: 80px;   /* Better spacing for medium-large screens */
+    --container-padding-right: 80px;  /* Symmetric padding */
+  }
+}
+
+/* ==================== ULTRA (1920px+) ==================== */
+@media (min-width: 1920px) {
+  :root {
+    --container-padding-left: 131px;   /* Ultra wide screen padding */
+    --container-padding-right: 131px;  /* Ultra wide screen padding */
+  }
+}
+
+/* ==================== EXTRA LARGE (2200px+) ==================== */
+@media (min-width: 2200px) {
+  :root {
+    --container-padding-left: 171px;   /* Extra large screen padding */
+    --container-padding-right: 171px;  /* Extra large screen padding */
+  }
+}
+
+/* ==================== SUPER LARGE (2560px+) - QHD/2K ==================== */
+@media (min-width: 2560px) {
+  :root {
+    --container-padding-left: 220px;   /* Super large screen padding */
+    --container-padding-right: 220px;  /* Super large screen padding */
+  }
+}
+
+/* ==================== ULTRA WIDE (3440px+) ==================== */
+@media (min-width: 3440px) {
+  :root {
+    --container-padding-left: 300px;   /* Ultra wide screen padding */
+    --container-padding-right: 300px;  /* Ultra wide screen padding */
+  }
+}
+
+/* ==================== 4K (3840px+) ==================== */
+@media (min-width: 3840px) {
+  :root {
+    --container-padding-left: 350px;   /* 4K screen padding */
+    --container-padding-right: 350px;  /* 4K screen padding */
+  }
+}
+

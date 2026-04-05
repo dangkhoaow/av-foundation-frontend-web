@@ -1,0 +1,332 @@
+/**
+ * Global Styles - Art & Venture Foundation
+ * Clean, semantic styles without hacks
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Import Design System Tokens & Utilities */
+@import '../design-system/tokens/breakpoints.css';
+@import '../design-system/utilities/responsive.css';
+
+/* ========================================
+   CSS Variables (Design Tokens)
+   ======================================== */
+:root {
+  /* Colors */
+  --color-burgundy: #6B2128;
+  --color-burgundy-light: #8B3138;
+  --color-burgundy-dark: #4B1118;
+  --color-burgundy-hover: #5A1B21;
+  --color-beige: #F2EFE7;
+  --color-beige-light: #F8F6F3;
+  --color-beige-dark: #E8E5DC;
+  --color-text-primary: #2E2E2E;
+  --color-text-secondary: #5A5958;
+  --color-text-tertiary: #7E7D7B;
+  --color-text-inverse: #FFFFFF;
+  --color-bg-main: #F2EFE7;
+  --color-bg-card: #F4F3F1;
+  --color-bg-white: #FFFFFF;
+
+  /* Typography - Font Families */
+  --font-heading: 'Big Caslon', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Typography - Display Sizes */
+  --text-display-xl: 80px;
+  --text-display-lg: 60px;
+  --text-display-md: 48px;
+  --text-display-sm: 36px;
+
+  /* Typography - Heading Sizes */
+  --text-h1: 48px;
+  --text-h2: 36px;
+  --text-h3: 30px;
+  --text-h4: 24px;
+  --text-h5: 20px;
+  --text-h6: 18px;
+
+  /* Typography - Body Sizes */
+  --text-body-xl: 20px;
+  --text-body-lg: 18px;
+  --text-body-md: 16px;
+  --text-body-sm: 14px;
+  --text-body-xs: 12px;
+
+  /* Typography - Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Typography - Line Heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+
+  /* Layout */
+  --layout-sidebar-width: 129px;
+  --layout-header-height: 80px;
+  --container-max-width: 1440px;
+  --container-padding: 24px;
+
+  /* Spacing (numbered system for consistency with design system) */
+  --spacing-0: 0;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 28px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+  --spacing-30: 120px;
+  --spacing-32: 128px;
+  --spacing-40: 160px;
+  --spacing-48: 192px;
+
+  /* Spacing (semantic aliases) */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+/* ========================================
+   Reset & Base Styles
+   ======================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-white);
+  overflow-x: hidden;
+}
+
+/* ========================================
+   Layout Structure
+   ======================================== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+  max-width: 100vw;
+  /* Ensure app doesn't exceed viewport width */
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* Prevent horizontal overflow */
+}
+
+/* With sidebar and header (add these classes when components are ready) */
+/* Sidebar only visible on desktop (1025px+) */
+@media (min-width: 1025px) {
+  .app.with-sidebar .main-content {
+    margin-left: var(--layout-sidebar-width);
+    width: calc(100% - var(--layout-sidebar-width));
+    max-width: calc(100vw - var(--layout-sidebar-width));
+    box-sizing: border-box;
+  }
+
+  .app.with-sidebar .ds-header {
+    margin-left: var(--layout-sidebar-width);
+    width: calc(100% - var(--layout-sidebar-width));
+  }
+
+  .app.with-sidebar .ds-footer {
+    margin-left: var(--layout-sidebar-width);
+    width: calc(100% - var(--layout-sidebar-width));
+  }
+}
+
+/* Note: margin-top removed because Header is position: relative, not fixed */
+/* If Header becomes fixed in the future, uncomment this:
+.app.with-header .main-content {
+  margin-top: var(--layout-header-height);
+}
+*/
+
+/* ========================================
+   Container
+   ======================================== */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 calc(var(--container-padding) * 2);
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    padding: 0 calc(var(--container-padding) * 3);
+  }
+}
+
+/* ========================================
+   Section Spacing
+   ======================================== */
+.section {
+  padding: var(--spacing-2xl) 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--spacing-3xl) 0;
+  }
+}
+
+/* ========================================
+   Typography Defaults
+   ======================================== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-burgundy);
+}
+
+/* ========================================
+   Image Defaults
+   ======================================== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========================================
+   Button Reset
+   ======================================== */
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline: 2px solid var(--color-burgundy);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   Smooth Scrolling
+   ======================================== */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

@@ -1,0 +1,50 @@
+/**
+ * Atom Component - Icon Styles
+ */
+
+.ds-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  line-height: 1;
+  color: currentColor;
+  transition: transform var(--transition-normal);
+}
+
+.ds-icon[role='button'] {
+  cursor: pointer;
+}
+
+.ds-icon[role='button']:hover {
+  transform: scale(1.1);
+}
+
+.ds-icon[role='button']:active {
+  transform: scale(0.95);
+}
+
+/* ===== Sizes ===== */
+.ds-icon--xs {
+  width: 12px;
+  height: 12px;
+}
+
+.ds-icon--sm {
+  width: 16px;
+  height: 16px;
+}
+
+.ds-icon--md {
+  width: 20px;
+  height: 20px;
+}
+
+.ds-icon--lg {
+  width: 24px;
+  height: 24px;
+}
+
+.ds-icon--xl {
+  width: 32px;
+  height: 32px;
+}
+

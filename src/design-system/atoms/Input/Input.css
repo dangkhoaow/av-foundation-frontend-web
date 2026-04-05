@@ -1,0 +1,124 @@
+/**
+ * Atom Component - Input Styles
+ */
+
+.ds-input-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.ds-input-wrapper--full-width {
+  width: 100%;
+}
+
+.ds-input-wrapper--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== Label ===== */
+.ds-input-label {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+/* ===== Input Container ===== */
+.ds-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ===== Input ===== */
+.ds-input {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-white);
+  border: 1px solid var(--color-border-medium);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-normal);
+  outline: none;
+}
+
+.ds-input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.ds-input:hover:not(:disabled) {
+  border-color: var(--color-border-dark);
+}
+
+.ds-input:focus {
+  border-color: var(--color-burgundy);
+  box-shadow: 0 0 0 3px rgba(107, 33, 40, 0.1);
+}
+
+.ds-input:disabled {
+  background-color: var(--color-bg-card);
+  cursor: not-allowed;
+}
+
+/* ===== Error State ===== */
+.ds-input--error {
+  border-color: var(--color-burgundy);
+}
+
+.ds-input--error:focus {
+  box-shadow: 0 0 0 3px rgba(107, 33, 40, 0.15);
+}
+
+/* ===== With Icons ===== */
+.ds-input--with-left-icon {
+  padding-left: var(--spacing-10);
+}
+
+.ds-input--with-right-icon {
+  padding-right: var(--spacing-10);
+}
+
+.ds-input-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.ds-input-icon--left {
+  left: var(--spacing-4);
+}
+
+.ds-input-icon--right {
+  right: var(--spacing-4);
+}
+
+.ds-input-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ===== Helper & Error Text ===== */
+.ds-input-error,
+.ds-input-helper {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  line-height: var(--line-height-normal);
+}
+
+.ds-input-error {
+  color: var(--color-burgundy);
+}
+
+.ds-input-helper {
+  color: var(--color-text-secondary);
+}
+

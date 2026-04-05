@@ -1,0 +1,155 @@
+/**
+ * Atom Component - Button Styles
+ */
+
+.ds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  position: relative;
+}
+
+.ds-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ds-button:focus-visible {
+  outline: 2px solid var(--color-burgundy);
+  outline-offset: 2px;
+}
+
+/* ===== Sizes ===== */
+.ds-button--sm {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--text-body-sm);
+  min-height: 32px;
+}
+
+.ds-button--md {
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--text-body-md);
+  min-height: 40px;
+}
+
+.ds-button--lg {
+  padding: var(--spacing-4) var(--spacing-8);
+  font-size: var(--text-body-lg);
+  min-height: 48px;
+}
+
+/* ===== Variants ===== */
+
+/* Primary (Burgundy solid) */
+.ds-button--primary {
+  background-color: var(--color-burgundy);
+  color: var(--color-text-inverse);
+}
+
+.ds-button--primary:hover:not(:disabled) {
+  background-color: var(--color-burgundy-hover);
+  transform: translateY(-1px);
+}
+
+.ds-button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Secondary (Beige solid) */
+.ds-button--secondary {
+  background-color: var(--color-beige);
+  color: var(--color-text-primary);
+}
+
+.ds-button--secondary:hover:not(:disabled) {
+  background-color: var(--color-beige-dark);
+  transform: translateY(-1px);
+}
+
+/* Burgundy (transparent with burgundy text) */
+.ds-button--burgundy {
+  background-color: transparent;
+  color: var(--color-burgundy);
+  border: 1px solid transparent;
+}
+
+.ds-button--burgundy:hover:not(:disabled) {
+  border-color: var(--color-burgundy);
+  background-color: rgba(107, 33, 40, 0.05);
+}
+
+/* Outline */
+.ds-button--outline {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-medium);
+}
+
+.ds-button--outline:hover:not(:disabled) {
+  border-color: var(--color-burgundy);
+  color: var(--color-burgundy);
+  background-color: rgba(107, 33, 40, 0.05);
+}
+
+/* Ghost */
+.ds-button--ghost {
+  background-color: transparent;
+  color: var(--color-text-primary);
+}
+
+.ds-button--ghost:hover:not(:disabled) {
+  background-color: var(--color-bg-card);
+}
+
+/* ===== Full Width ===== */
+.ds-button--full-width {
+  width: 100%;
+}
+
+/* ===== Icons ===== */
+.ds-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-button__icon svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* ===== Loading State ===== */
+.ds-button--loading {
+  pointer-events: none;
+}
+
+.ds-button__spinner {
+  display: inline-flex;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Text ===== */
+.ds-button__text {
+  display: inline-flex;
+  align-items: center;
+}
+

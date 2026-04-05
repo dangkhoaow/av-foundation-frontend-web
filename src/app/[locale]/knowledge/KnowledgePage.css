@@ -1,0 +1,106 @@
+/* Knowledge Page Styles */
+/* Following Collection Page pattern - using design system variables */
+
+/* ==================== BASE STYLES (Mobile First) ==================== */
+.knowledge-page {
+  min-height: 100vh;
+  background: var(--color-bg-main);
+  padding: 100px var(--container-padding-right) 80px var(--container-padding-left);
+}
+
+.knowledge-page__container {
+  /* No max-width or margin auto - let content flow naturally with sidebar */
+}
+
+.knowledge-page__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-display-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-burgundy);
+  margin: 0 0 var(--spacing-16) 0;
+}
+
+.knowledge-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-8);
+}
+
+.knowledge-card {
+  background: var(--color-bg-white);
+  text-decoration: none;
+  transition: transform var(--transition-normal);
+}
+
+.knowledge-card:hover {
+  transform: translateY(-4px);
+}
+
+.knowledge-card__image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--color-beige-dark);
+}
+
+.knowledge-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.knowledge-card__content {
+  padding: var(--spacing-6);
+}
+
+.knowledge-card__title {
+  font-family: var(--font-body);
+  font-size: var(--text-h5);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.knowledge-card__excerpt {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-tertiary);
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+.knowledge-card__date {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  color: #999999;
+}
+
+/* ==================== TABLET (768px+) ==================== */
+@media (min-width: 768px) {
+  .knowledge-page {
+    padding: 120px var(--spacing-10) 100px var(--spacing-10);
+  }
+
+  .knowledge-page__title {
+    font-size: var(--text-display-lg);
+  }
+
+  .knowledge-page__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==================== DESKTOP (1024px+) ==================== */
+@media (min-width: 1024px) {
+  .knowledge-page {
+    padding: 140px var(--container-padding-right) 120px var(--container-padding-left);
+  }
+
+  .knowledge-page__title {
+    font-size: var(--text-display-xl);
+  }
+
+  .knowledge-page__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

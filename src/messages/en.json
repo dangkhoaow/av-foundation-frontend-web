@@ -1,0 +1,214 @@
+{
+  "nav": {
+    "home": "Home",
+    "collection": "Collection",
+    "artists": "Artists",
+    "events": "A&V Foundation Events",
+    "news": "A&V News",
+    "knowledge": "Knowledge",
+    "whoWeAre": "Who We Are"
+  },
+  "common": {
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "explore": "Explore",
+    "more": "MORE",
+    "search": "Search...",
+    "loading": "Loading...",
+    "noResults": "No results found",
+    "viewDetails": "View details",
+    "backToTop": "Back to top",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "share": "Share",
+    "copy": "Copy",
+    "copied": "Copied",
+    "download": "Download",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address"
+  },
+  "hero": {
+    "title": "Art & Venture Foundation",
+    "description": "Lorem ipsum dolor sit amet consectetur. Massa turpis ullamcorper eget elementum feugiat sit quam dolor. Mauris in convallis interdum facilisis platea sapien. Scelerisque porttitor iaculis in mauris elementum eu vulputate. Viverra neque sit ridiculus orci amet quisque sodales sapien sollicitudin.",
+    "buttonText": "MORE"
+  },
+  "home": {
+    "artCollection": {
+      "title": "Art Collection",
+      "subtitle": "Discover exceptional artworks",
+      "description": "Our collection features works from renowned artists and emerging talents",
+      "viewAll": "View all artworks"
+    },
+    "communitySupport": {
+      "title": "Community support",
+      "victorTardieu": {
+        "title": "Victor Tardieu Award",
+        "description": "Born in the context of celebrating a century of tradition of the Indochina School of Fine Arts - Vietnam University of Fine Arts, the Victor Tardieu Award carries the spirit of 'A century of convergence, opening the future'. The award is named after Victor Tardieu - a French painter and the first principal of the Indochina School of Fine Arts, who laid the foundation for modern art education in Vietnam."
+      },
+      "mandarineRoad": {
+        "title": "Mandarine Road Prize",
+        "description": "The Mandarine Road Prize competition is officially launched! The 'Mandarine Road Prize' (Prix de la route Mandarine) is organized annually with the aim of honoring two Vietnamese students majoring in fine arts, helping them take their first steps into the international art market through an exhibition in Paris."
+      }
+    },
+    "newsEvents": {
+      "title": "A&V Foundation Events",
+      "viewAllEvents": "View all events"
+    },
+    "avNews": {
+      "title": "A&V News",
+      "viewAllNews": "View all news"
+    }
+  },
+  "collection": {
+    "title": "Collection",
+    "description": "Discover exceptional artworks in our collection",
+    "filters": {
+      "all": "All",
+      "painting": "Painting",
+      "sculpture": "Sculpture",
+      "photography": "Photography",
+      "installation": "Installation"
+    },
+    "sort": {
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "nameAZ": "Name A-Z",
+      "nameZA": "Name Z-A"
+    },
+    "noArtworks": "No artworks found"
+  },
+  "artists": {
+    "title": "Artists",
+    "description": "Meet talented artists and learn about their artistic journey",
+    "biography": "Biography",
+    "artworks": "Artworks",
+    "exhibitions": "Exhibitions",
+    "awards": "Awards",
+    "noArtists": "No artists found"
+  },
+  "events": {
+    "title": "Events",
+    "description": "Join exceptional cultural and artistic events",
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "date": "Date",
+    "time": "Time",
+    "location": "Location",
+    "register": "Register",
+    "learnMore": "Learn more",
+    "noEvents": "No events found"
+  },
+  "news": {
+    "title": "News",
+    "description": "Stay updated with the latest news about art and culture",
+    "latest": "Latest news",
+    "featured": "Featured news",
+    "category": "Category",
+    "author": "Author",
+    "publishedDate": "Published date",
+    "readTime": "min read",
+    "relatedNews": "Related news",
+    "noNews": "No news found"
+  },
+  "knowledge": {
+    "title": "Knowledge",
+    "description": "Explore knowledge about art, history, and culture",
+    "categories": {
+      "artHistory": "Art History",
+      "techniques": "Techniques",
+      "movements": "Movements",
+      "conservation": "Conservation"
+    },
+    "noArticles": "No articles found"
+  },
+  "whoWeAre": {
+    "title": "Who We Are",
+    "mission": {
+      "title": "Mission",
+      "description": "Promoting Vietnamese art and culture, connecting artists with the community"
+    },
+    "vision": {
+      "title": "Vision",
+      "description": "To become the leading art center in Vietnam and the region"
+    },
+    "values": {
+      "title": "Values",
+      "description": "Passion, creativity, responsibility, and community"
+    }
+  },
+  "footer": {
+    "title": "Arts & Venture Foundation (AVF)",
+    "contact": {
+      "address1": "A: 5/F Building 112 Tu Hoa, Tay Ho, Hanoi",
+      "address2": "A: 25/F D' Le Roi Soleil, 59 Xuan Dieu, Tay Ho, Hanoi",
+      "email": "E: info@avfoundation.com.vn"
+    },
+    "sections": {
+      "whoWeAre": "Who We are",
+      "aboutUs": "About us",
+      "otherInfo": "Other information"
+    },
+    "copyright": "© Art & Venture Foundation. All rights reserved.",
+    "socialLinks": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "twitter": "Twitter/X",
+      "tiktok": "TikTok"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "Art & Venture Foundation",
+      "description": "Discover art collections, community support programs, partnerships, and cultural events at Art & Venture Foundation"
+    },
+    "collection": {
+      "title": "Collection",
+      "description": "Discover exceptional artworks in our collection"
+    },
+    "artists": {
+      "title": "Artists",
+      "description": "Meet talented artists and learn about their artistic journey"
+    },
+    "events": {
+      "title": "Events",
+      "description": "Join exceptional cultural and artistic events"
+    },
+    "news": {
+      "title": "News",
+      "description": "Stay updated with the latest news about art and culture"
+    },
+    "knowledge": {
+      "title": "Knowledge",
+      "description": "Explore knowledge about art, history, and culture"
+    },
+    "whoWeAre": {
+      "title": "Who We Are",
+      "description": "Learn about the mission, vision, and values of Art & Venture Foundation"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "Page not found",
+      "description": "The page you are looking for does not exist or has been removed",
+      "backToHome": "Back to home"
+    },
+    "500": {
+      "title": "Server error",
+      "description": "An error occurred, please try again later",
+      "retry": "Retry"
+    },
+    "general": "An error occurred, please try again"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLanguage": "Switch language",
+    "scrollToTop": "Scroll to top"
+  }
+}
+
+
+

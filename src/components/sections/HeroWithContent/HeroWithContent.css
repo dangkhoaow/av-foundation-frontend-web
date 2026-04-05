@@ -1,0 +1,236 @@
+/* HeroWithContent Section Styles */
+
+/* ==================== BASE STYLES (Mobile First) ==================== */
+.hero-with-content {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Hero Section - Background only */
+.hero-with-content__hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  height: 827px;
+  overflow: hidden;
+}
+
+/* Background from Hero component */
+.hero-with-content__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-with-content__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-with-content__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+}
+
+/* Content Box - Overlaps between hero and empty space */
+.hero-with-content__content-box {
+  position: absolute;
+  top: 595px; /* From Figma: y position */
+  left: var(--container-padding-left); /* Aligned with header menu */
+  right: var(--container-padding-right); /* Aligned with header padding */
+  width: auto; /* Let left/right control width */
+  max-width: 638px;
+  background: var(--color-bg-main);
+  padding: var(--spacing-6) 28px;
+  z-index: 10; /* Above both hero and empty space */
+  box-shadow: var(--shadow-xl);
+  border-bottom: 1px solid var(--color-burgundy); /* Figma spec: bottom border */
+}
+
+.hero-with-content__title {
+  font-family: var(--font-heading);
+  font-size: var(--spacing-8);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+  color: var(--color-burgundy);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.hero-with-content__description {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.7;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+/* EXPLORE button - clean style like Art Collection */
+.hero-with-content__explore-button {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--text-body-md);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-loose);
+  color: var(--color-burgundy);
+  text-decoration: none;
+  transition: all var(--transition-normal);
+}
+
+.hero-with-content__explore-button:hover {
+  opacity: 0.8;
+}
+
+.hero-with-content__explore-button svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+}
+
+.hero-with-content__explore-button:hover svg {
+  transform: translateX(12px);
+}
+
+/* Empty space below hero section */
+.hero-with-content__empty-space {
+  width: 100%;
+  min-height: 200px;
+  background: transparent;
+}
+
+/* ==================== TABLET (768px+) ==================== */
+@media (min-width: 768px) {
+  .hero-with-content__hero-section {
+    min-height: 700px;
+  }
+  
+  .hero-with-content__content-box {
+    left: var(--container-padding-left); /* Aligned with header menu */
+    right: var(--container-padding-right);
+    width: auto;
+    max-width: 600px;
+    padding: 28px 35px;
+  }
+  
+  .hero-with-content__title {
+    font-size: 44px;
+  }
+  
+  .hero-with-content__description {
+    font-size: var(--text-body-sm);
+    line-height: 1.8;
+  }
+  
+  .hero-with-content__empty-space {
+    min-height: 250px;
+  }
+}
+
+/* ==================== DESKTOP (1024px+) ==================== */
+@media (min-width: 1024px) {
+  .hero-with-content__hero-section {
+    height: 827px;
+    min-height: 827px;
+  }
+  
+  .hero-with-content__content-box {
+    top: 595px; /* Figma: y=595px from top */
+    left: var(--container-padding-left); /* Aligned with header menu */
+    right: auto; /* Remove right constraint on desktop */
+    width: 550px;
+    max-width: 48%;
+    padding: 35px 45px;
+  }
+  
+  .hero-with-content__title {
+    font-size: 56px;
+  }
+  
+  .hero-with-content__description {
+    font-size: var(--text-body-md);
+    line-height: var(--line-height-loose);
+    margin: 0 0 25px 0;
+  }
+  
+  .hero-with-content__button {
+    font-size: var(--text-body-md);
+  }
+  
+  .hero-with-content__empty-space {
+    min-height: 300px;
+  }
+}
+
+/* ==================== WIDE (1440px+) ==================== */
+@media (min-width: 1440px) {
+  .hero-with-content__content-box {
+    top: 595px; /* Figma: y=595px (from 114px header + 481px in frame) */
+    left: var(--container-padding-left); /* Aligned with header menu - dynamic */
+    right: auto; /* Remove right constraint on wide */
+    width: 638px;
+    max-height: 600px;
+    padding: 50px 60px; /* Figma: 50px top/bottom, 60px left/right */
+  }
+  
+  .hero-with-content__title {
+    font-size: 70px;
+    margin: 0 0 25px 0;
+  }
+  
+  .hero-with-content__empty-space {
+    min-height: 350px;
+  }
+}
+
+/* ==================== ULTRA (1920px+) ==================== */
+@media (min-width: 1920px) {
+  .hero-with-content__hero-section {
+    height: 827px;
+    min-height: 827px;
+  }
+  
+  .hero-with-content__content-box {
+    top: 595px;
+    left: var(--container-padding-left); /* Aligned with header menu - dynamic */
+    right: auto; /* Remove right constraint on ultra */
+    width: 700px;
+    padding: 50px 60px;
+  }
+  
+  .hero-with-content__title {
+    font-size: var(--text-display-xl);
+  }
+  
+  .hero-with-content__empty-space {
+    min-height: 400px;
+  }
+}
+
+/* ==================== EXTRA LARGE (2200px+) ==================== */
+@media (min-width: 2200px) {
+  .hero-with-content__content-box {
+    top: 595px;
+    left: var(--container-padding-left); /* Aligned with header menu - dynamic */
+    right: auto; /* Remove right constraint on extra large */
+    width: 750px;
+  }
+  
+  .hero-with-content__empty-space {
+    min-height: 450px;
+  }
+}

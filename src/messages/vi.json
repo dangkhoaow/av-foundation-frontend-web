@@ -1,0 +1,212 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "collection": "Bộ sưu tập",
+    "artists": "Nghệ sĩ",
+    "events": "Sự kiện A&V",
+    "news": "Tin tức A&V",
+    "knowledge": "Tri thức",
+    "whoWeAre": "Chúng tôi là ai"
+  },
+  "common": {
+    "readMore": "Đọc thêm",
+    "viewAll": "Xem tất cả",
+    "explore": "Khám phá",
+    "more": "XEM THÊM",
+    "search": "Tìm kiếm...",
+    "loading": "Đang tải...",
+    "noResults": "Không tìm thấy kết quả",
+    "viewDetails": "Xem chi tiết",
+    "backToTop": "Lên đầu trang",
+    "close": "Đóng",
+    "next": "Tiếp theo",
+    "previous": "Trước",
+    "share": "Chia sẻ",
+    "copy": "Sao chép",
+    "copied": "Đã sao chép",
+    "download": "Tải xuống",
+    "email": "Email",
+    "phone": "Điện thoại",
+    "address": "Địa chỉ"
+  },
+  "hero": {
+    "title": "Art & Venture Foundation",
+    "description": "Lorem ipsum dolor sit amet consectetur. Massa turpis ullamcorper eget elementum feugiat sit quam dolor. Mauris in convallis interdum facilisis platea sapien. Scelerisque porttitor iaculis in mauris elementum eu vulputate. Viverra neque sit ridiculus orci amet quisque sodales sapien sollicitudin.",
+    "buttonText": "XEM THÊM"
+  },
+  "home": {
+    "artCollection": {
+      "title": "Bộ sưu tập",
+      "subtitle": "Khám phá các tác phẩm nghệ thuật đặc sắc",
+      "description": "Bộ sưu tập của chúng tôi bao gồm các tác phẩm từ những nghệ sĩ nổi tiếng và tài năng mới nổi",
+      "viewAll": "Xem tất cả tác phẩm"
+    },
+    "communitySupport": {
+      "title": "Hỗ trợ cộng đồng",
+      "victorTardieu": {
+        "title": "Giải thưởng Victor Tardieu",
+        "description": "Ra đời trong bối cảnh kỷ niệm một thế kỷ truyền thống của Trường Mỹ thuật Đông Dương – Trường Đại học Mỹ thuật Việt Nam, Giải thưởng Victor Tardieu mang trong mình tinh thần \"Trăm năm hội tụ, khai mở tương lai\". Giải thưởng được đặt theo tên Victor Tardieu – họa sĩ người Pháp, đồng thời là hiệu trưởng đầu tiên của Trường Mỹ thuật Đông Dương, người đã đặt nền móng cho nền giáo dục mỹ thuật hiện đại tại Việt Nam."
+      },
+      "mandarineRoad": {
+        "title": "Giải thưởng Con đường Thiên Lý",
+        "description": "Cuộc thi Giải thưởng Con Đường Thiên Lý (Mandarine Road Prize) chính thức được phát động! \"Giải thưởng Con đường Thiên Lý\" (Prix de la route Mandarine) được tổ chức hàng năm với mục tiêu tôn vinh hai sinh viên Việt Nam chuyên ngành mỹ thuật, giúp họ bước những bước đầu tiên vào thị trường nghệ thuật quốc tế thông qua một buổi triển lãm tại Paris."
+      }
+    },
+    "newsEvents": {
+      "title": "Sự kiện Quỹ A&V",
+      "viewAllEvents": "Xem tất cả sự kiện"
+    },
+    "avNews": {
+      "title": "Tin tức A&V",
+      "viewAllNews": "Xem tất cả tin tức"
+    }
+  },
+  "collection": {
+    "title": "Bộ sưu tập",
+    "description": "Khám phá những tác phẩm nghệ thuật đặc sắc trong bộ sưu tập của chúng tôi",
+    "filters": {
+      "all": "Tất cả",
+      "painting": "Hội họa",
+      "sculpture": "Điêu khắc",
+      "photography": "Nhiếp ảnh",
+      "installation": "Sắp đặt"
+    },
+    "sort": {
+      "newest": "Mới nhất",
+      "oldest": "Cũ nhất",
+      "nameAZ": "Tên A-Z",
+      "nameZA": "Tên Z-A"
+    },
+    "noArtworks": "Không có tác phẩm nào"
+  },
+  "artists": {
+    "title": "Nghệ sĩ",
+    "description": "Gặp gỡ những nghệ sĩ tài năng và tìm hiểu về hành trình nghệ thuật của họ",
+    "biography": "Tiểu sử",
+    "artworks": "Tác phẩm",
+    "exhibitions": "Triển lãm",
+    "awards": "Giải thưởng",
+    "noArtists": "Không có nghệ sĩ nào"
+  },
+  "events": {
+    "title": "Sự kiện",
+    "description": "Tham gia các sự kiện văn hóa và nghệ thuật đặc sắc",
+    "upcoming": "Sắp diễn ra",
+    "past": "Đã diễn ra",
+    "date": "Ngày",
+    "time": "Thời gian",
+    "location": "Địa điểm",
+    "register": "Đăng ký",
+    "learnMore": "Tìm hiểu thêm",
+    "noEvents": "Không có sự kiện nào"
+  },
+  "news": {
+    "title": "Tin tức",
+    "description": "Cập nhật những tin tức mới nhất về nghệ thuật và văn hóa",
+    "latest": "Tin mới nhất",
+    "featured": "Tin nổi bật",
+    "category": "Danh mục",
+    "author": "Tác giả",
+    "publishedDate": "Ngày đăng",
+    "readTime": "phút đọc",
+    "relatedNews": "Tin tức liên quan",
+    "noNews": "Không có tin tức nào"
+  },
+  "knowledge": {
+    "title": "Tri thức",
+    "description": "Khám phá kiến thức về nghệ thuật, lịch sử và văn hóa",
+    "categories": {
+      "artHistory": "Lịch sử nghệ thuật",
+      "techniques": "Kỹ thuật",
+      "movements": "Trào lưu",
+      "conservation": "Bảo tồn"
+    },
+    "noArticles": "Không có bài viết nào"
+  },
+  "whoWeAre": {
+    "title": "Chúng tôi là ai",
+    "mission": {
+      "title": "Sứ mệnh",
+      "description": "Thúc đẩy nghệ thuật và văn hóa Việt Nam, kết nối nghệ sĩ với cộng đồng"
+    },
+    "vision": {
+      "title": "Tầm nhìn",
+      "description": "Trở thành trung tâm nghệ thuật hàng đầu tại Việt Nam và khu vực"
+    },
+    "values": {
+      "title": "Giá trị",
+      "description": "Đam mê, sáng tạo, trách nhiệm và cộng đồng"
+    }
+  },
+  "footer": {
+    "title": "Arts & Venture Foundation (AVF)",
+    "contact": {
+      "address1": "A: 5/F Building 112 Tu Hoa, Tay Ho, Hanoi",
+      "address2": "A: 25/F D' Le Roi Soleil, 59 Xuan Dieu, Tay Ho, Hanoi",
+      "email": "E: info@avfoundation.com.vn"
+    },
+    "sections": {
+      "whoWeAre": "Chúng tôi là ai",
+      "aboutUs": "Về chúng tôi",
+      "otherInfo": "Thông tin khác"
+    },
+    "copyright": "© Art & Venture Foundation. Bảo lưu mọi quyền.",
+    "socialLinks": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "twitter": "Twitter/X",
+      "tiktok": "TikTok"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "Art & Venture Foundation",
+      "description": "Khám phá bộ sưu tập nghệ thuật, các chương trình hỗ trợ cộng đồng, đối tác và sự kiện văn hóa tại Art & Venture Foundation"
+    },
+    "collection": {
+      "title": "Bộ sưu tập",
+      "description": "Khám phá những tác phẩm nghệ thuật đặc sắc trong bộ sưu tập của chúng tôi"
+    },
+    "artists": {
+      "title": "Nghệ sĩ",
+      "description": "Gặp gỡ những nghệ sĩ tài năng và tìm hiểu về hành trình nghệ thuật của họ"
+    },
+    "events": {
+      "title": "Sự kiện",
+      "description": "Tham gia các sự kiện văn hóa và nghệ thuật đặc sắc"
+    },
+    "news": {
+      "title": "Tin tức",
+      "description": "Cập nhật những tin tức mới nhất về nghệ thuật và văn hóa"
+    },
+    "knowledge": {
+      "title": "Tri thức",
+      "description": "Khám phá kiến thức về nghệ thuật, lịch sử và văn hóa"
+    },
+    "whoWeAre": {
+      "title": "Chúng tôi là ai",
+      "description": "Tìm hiểu về sứ mệnh, tầm nhìn và giá trị của Art & Venture Foundation"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "Không tìm thấy trang",
+      "description": "Trang bạn đang tìm kiếm không tồn tại hoặc đã bị xóa",
+      "backToHome": "Quay về trang chủ"
+    },
+    "500": {
+      "title": "Lỗi máy chủ",
+      "description": "Đã xảy ra lỗi, vui lòng thử lại sau",
+      "retry": "Thử lại"
+    },
+    "general": "Đã xảy ra lỗi, vui lòng thử lại"
+  },
+  "accessibility": {
+    "skipToContent": "Bỏ qua đến nội dung chính",
+    "openMenu": "Mở menu",
+    "closeMenu": "Đóng menu",
+    "switchLanguage": "Chuyển đổi ngôn ngữ",
+    "scrollToTop": "Cuộn lên đầu trang"
+  }
+}
+

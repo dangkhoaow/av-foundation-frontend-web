@@ -1,0 +1,5 @@
+@import './app/globals.css';
+
+.app-root {
+  min-height: 100vh;
+}
