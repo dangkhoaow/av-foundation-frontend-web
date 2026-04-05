@@ -35,6 +35,44 @@ metadata:
 ```
 
 ## Current status
+## 2026-04-05 14:39
+### Shipped
+- Added base-path aware E2E navigation helpers using `E2E_BASE_URL`.
+- Made E2E tests resilient to empty news/events datasets and API timing.
+- Stabilized collection modal clicks with forced interaction.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- `E2E_BASE_URL=http://localhost:5173/av-foundation-frontend-web/ npm run test:runner`
+- Latest run: `.agent/skills/test-runner/runs/test-run-20260405-1439.md` (all tests passed; news/events skipped due to empty data)
+
+### Not implemented yet
+- GH Pages deployment with updated routing + test adjustments.
+
+### Risks / blockers
+- News/events APIs currently return empty datasets, so detail tests skip.
+
+## 2026-04-05 14:20
+### Shipped
+- Added router basename from Vite `BASE_URL` to respect GH Pages base path.
+- Added router base diagnostics to help debug base path redirects.
+
+### Deployed
+- GH Pages URL: https://dangkhoaow.github.io/av-foundation-frontend-web/
+- Commit/branch: not deployed yet (local changes)
+
+### Testable now
+- Local preview can validate base-path routing using `/av-foundation-frontend-web/`.
+
+### Not implemented yet
+- GH Pages deployment with updated router basename.
+
+### Risks / blockers
+- GH Pages still redirects to root until redeployed with basename fix.
+
 ## 2026-04-05 13:32
 ### Shipped
 - CI build now defaults `VITE_API_URL` and `VITE_IMAGE_BASE_URL` to the CloudFront backend if secrets are missing.

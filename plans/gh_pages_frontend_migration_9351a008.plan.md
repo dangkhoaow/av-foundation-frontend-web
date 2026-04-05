@@ -245,6 +245,16 @@ flowchart LR
   - `GET /api/public/events/paths` → `{ slug, updatedAt }[]`
   - `GET /api/public/artists/paths` → `{ id, updatedAt }[]`
 
+## Acceptance criteria (AC)
+- AC-01: Locale routing works for `vi` and `en` in all primary routes.
+- AC-02: Home, Collection, Artists, Events, News, Knowledge, Who We Are render.
+- AC-03: Detail pages load real data from backend public APIs.
+- AC-04: Artwork detail supports both id and slug keys.
+- AC-05: Public API calls function without mocks or hardcoded fallbacks.
+- AC-06: Static HTML output exists for all required routes.
+- AC-07: GH Pages deployment works with correct base path and assets.
+- AC-08: Test runner produces dated reports and issues.
+
 ## Acceptance checklist
 - All current routes render with the same layout and styles.
 - No frontend SSR required; app works on pure static host.

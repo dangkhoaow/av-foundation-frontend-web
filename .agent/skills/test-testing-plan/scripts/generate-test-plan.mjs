@@ -6,6 +6,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..', '..', '..', '..');
 
 const planPath = '/Users/ktran/.cursor/plans/gh_pages_frontend_migration_9351a008.plan.md';
+const productMilestonesPath = path.join(
+  repoRoot,
+  '.agent',
+  'skills',
+  'product-migration-milestones',
+  'SKILL.md'
+);
 const statusPath = path.join(repoRoot, '.agent', 'skills', 'tech-dev-process-implementation', 'SKILL.md');
 const outputDir = path.join(repoRoot, '.agent', 'skills', 'test-testing-plan', 'plans');
 
@@ -114,16 +121,64 @@ const formatTimestamp = (date = new Date()) => {
   return `${yyyy}${mm}${dd}-${hh}${min}`;
 };
 
-const loadPlanACs = async () => {
-  const content = await fs.readFile(planPath, 'utf8');
+const loadAcsFromFile = async ({ label, filePath }) => {
+  const content = await fs.readFile(filePath, 'utf8');
   const lines = content.split('\n');
   const acs = [];
 
   lines.forEach((line) => {
     const match = line.match(acRegex);
     if (match) {
-      acs.push({ id: `AC-${match[1]}`, title: match[2].trim() });
+      acs.push({ id: `AC-${match[1]}`, title: match[2].trim(), source: label });
     }
+  });
+
+  console.info('[TestPlan] AC source loaded', {
+    source: label,
+    path: filePath,
+    count: acs.length,
+    ids: acs.map((ac) => ac.id),
+  });
+
+  return acs;
+};
+
+const loadPlanACs = async () => {
+  const sources = [
+    { label: 'plan', filePath: planPath },
+    { label: 'product-migration-milestones', filePath: productMilestonesPath },
+  ];
+
+  const acLists = await Promise.all(sources.map((source) => loadAcsFromFile(source)));
+  const merged = new Map();
+  const duplicates = [];
+
+  acLists.flat().forEach((ac) => {
+    if (!merged.has(ac.id)) {
+      merged.set(ac.id, { ...ac, sources: [ac.source] });
+      return;
+    }
+
+    const existing = merged.get(ac.id);
+    existing.sources.push(ac.source);
+
+    if (existing.title !== ac.title) {
+      duplicates.push({
+        id: ac.id,
+        titles: [existing.title, ac.title],
+        sources: existing.sources.slice(),
+      });
+    }
+  });
+
+  if (duplicates.length) {
+    console.warn('[TestPlan] AC title mismatches detected', { duplicates });
+  }
+
+  const acs = Array.from(merged.values()).map(({ sources, ...ac }) => ac);
+  console.info('[TestPlan] AC merge complete', {
+    total: acs.length,
+    duplicateIds: duplicates.map((duplicate) => duplicate.id),
   });
 
   return acs;
@@ -160,12 +215,21 @@ const buildTestCase = (acId) => {
 };
 
 const run = async () => {
-  console.info('[TestPlan] Generating test plan', { planPath, statusPath });
+  console.info('[TestPlan] Generating test plan', {
+    planPath,
+    productMilestonesPath,
+    statusPath,
+  });
 
   const [acs, statusText] = await Promise.all([loadPlanACs(), loadStatusText()]);
   const implemented = acs.filter((ac) => isImplemented(ac.id, statusText));
 
-  console.info('[TestPlan] ACs detected', { total: acs.length, implemented: implemented.length });
+  console.info('[TestPlan] Status text loaded', { length: statusText.length });
+  console.info('[TestPlan] ACs detected', {
+    total: acs.length,
+    implemented: implemented.length,
+    implementedIds: implemented.map((ac) => ac.id),
+  });
 
   const timestamp = formatTimestamp();
   const outputPath = path.join(outputDir, `test-plan-${timestamp}.md`);

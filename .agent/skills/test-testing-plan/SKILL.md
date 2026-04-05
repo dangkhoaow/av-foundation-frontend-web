@@ -10,6 +10,7 @@ metadata:
 
 ## Inputs
 - Epic plan file: `/Users/ktran/.cursor/plans/gh_pages_frontend_migration_9351a008.plan.md`
+- Product milestones AC list: `.agent/skills/product-migration-milestones/SKILL.md`
 - Latest status: `.agent/skills/tech-dev-process-implementation/SKILL.md`
 
 ## Output
